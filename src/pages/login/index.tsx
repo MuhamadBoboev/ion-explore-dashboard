@@ -112,7 +112,7 @@ const schema = yup.object().shape({
 
 const defaultValues = {
   password: '123456',
-  contact: 'admin@promebel.tj'
+  contact: 'admin@ion.tj'
 }
 
 interface FormData {
@@ -206,7 +206,7 @@ const LoginPage = () => {
                         onChange(event)
                       }}
                       error={Boolean(errors.contact)}
-                      placeholder="admin@vuexy.com"
+                      placeholder="admin@ion.tj"
                     />
                   )}
                 />

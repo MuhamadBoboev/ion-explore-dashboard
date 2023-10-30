@@ -9,22 +9,22 @@ import { BannerModals } from '@modules/banner/ui/BannerModals'
 import { getFetcher } from '@shared/api/fetcher/getFetcher'
 
 function Banners() {
-  const [handleCreateOpen] = useBannerStore(({handleCreateOpen}) => [handleCreateOpen])
+  const [handleCreateOpen] = useBannerStore(({ handleCreateOpen }) => [handleCreateOpen])
   const {
     data: banners,
     isValidating,
     isLoading,
     error,
     mutate,
-  } = useSWR<{ data: IBanner[] }>('/banners', getFetcher)
+  } = useSWR<{ data: IBanner[] }>('/contact/', getFetcher)
 
   if (error) {
-    return <Error500/>
+    return <Error500 />
   }
 
   return (
     <CustomCard>
-      <BannerModals mutate={mutate}/>
+      <BannerModals mutate={mutate} />
       <CustomPageHeader
         handleOpen={handleCreateOpen}
         title="Баннеры"

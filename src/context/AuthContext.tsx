@@ -21,9 +21,9 @@ const defaultProvider: AuthValuesType = {
   setLoading: () => Boolean,
   login: () => Promise.resolve(),
   logout: () => Promise.resolve(),
-  initAuth: () => {
-    return
-  },
+  // initAuth: () => {
+  //   return
+  // },
 }
 
 const AuthContext = createContext(defaultProvider)
@@ -44,6 +44,7 @@ const AuthProvider = ({ children }: Props) => {
     try {
       const storedToken = window.localStorage.getItem(authConfig.storageTokenKeyName)!
       if (storedToken) {
+        console.log(storedToken)
         setLoading(true)
         await axiosInstance
           .get(authConfig.meEndpoint, {
@@ -53,7 +54,7 @@ const AuthProvider = ({ children }: Props) => {
           })
           .then(async response => {
             setLoading(false)
-            setUser(response.data.data)
+            setUser(response.data)
           })
           .catch((e: any) => {
             if (e.response.status !== 200) {
@@ -84,24 +85,27 @@ const AuthProvider = ({ children }: Props) => {
   const handleLogin = async (params: LoginParams, errorCallback?: ErrCallbackType) => {
 
     try {
-      const formData = new FormData()
       const type = getContactType(params.contact)
       if (type === 'invalid') {
         errorCallback && errorCallback({
           message: 'Неверный формат номера телефона или email'
         })
       }
-      formData.append(type, params.contact)
-      formData.append('password', params.password)
-      const response = await axiosInstance.post(authConfig.loginEndpoint, formData)
-      toast.success(response.data.message)
+      const response = await axiosInstance.post(authConfig.loginEndpoint, {
+        email: params.contact,
+        password: params.password,
+      })
+      if (!response.data.access_token) {
+        throw new Error()
+      }
+      toast.success('Успешна авторизовано')
       params.rememberMe
-        ? window.localStorage.setItem(authConfig.storageTokenKeyName, response.data.token)
+        ? window.localStorage.setItem(authConfig.storageTokenKeyName, response.data.access_token)
         : null
       const returnUrl = router.query.returnUrl
 
-      setUser(response.data.user)
-      params.rememberMe ? window.localStorage.setItem('userData', JSON.stringify(response.data.user)) : null
+      setUser(response.data)
+      params.rememberMe ? window.localStorage.setItem('userData', JSON.stringify(response.data)) : null
 
       const redirectURL = returnUrl && returnUrl !== '/' ? returnUrl : '/'
 
@@ -109,7 +113,7 @@ const AuthProvider = ({ children }: Props) => {
 
     } catch (err: any) {
       console.log(err)
-      toast.error(err.response.data.message)
+      toast.error('Произошла ошибка')
       if (errorCallback) errorCallback(err.response)
     }
   }
