@@ -9,21 +9,21 @@ import { KeyedMutator } from 'swr'
 
 interface Props {
   loading: boolean
-  banners: IBanner[]
+  banners: IBanner
   mutate: KeyedMutator<any>
 }
 
-function BannersTable({banners, loading, mutate}: Props) {
-  const {trigger} = useSWRMutation('/banners', deleteFetcher)
-  const [handleUpdateOpen] = useBannerStore(({handleUpdateOpen}) => [handleUpdateOpen])
+function BannersTable({ banners, loading, mutate }: Props) {
+  const { trigger } = useSWRMutation('/contact?lang=ru', deleteFetcher)
+  const [handleUpdateOpen] = useBannerStore(({ handleUpdateOpen }) => [handleUpdateOpen])
 
   return (
     <DataGrid
-      slots={{loadingOverlay: LinearProgress}}
+      slots={{ loadingOverlay: LinearProgress }}
       hideFooter
       loading={loading}
-      columns={bannerColumns({handleUpdateOpen, trigger, mutate})}
-      rows={banners}
+      columns={bannerColumns({ handleUpdateOpen, trigger, mutate })}
+      rows={[banners]}
       rowSelection={false}
       autoHeight
       localeText={{

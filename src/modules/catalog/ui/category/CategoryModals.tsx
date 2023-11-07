@@ -5,23 +5,27 @@ import { UpdateCategory } from '@modules/catalog/ui/category/UpdateCategory'
 import { IService } from '@modules/service'
 import { getFetcher } from '@shared/api/fetcher/getFetcher'
 import Loader from '@shared/ui/Loader'
+import { langSelector, useLanguageStore } from '@shared/model/store'
 
 interface Props {
   mutate: KeyedMutator<any>
 }
 
-function CategoryModals({mutate}: Props) {
-  const [open, update] = useCategoryStore(({open, update}) => [open, update])
-  const {data: services} = useSWR<{ data: IService[] }>('/services?per_page=1000000', getFetcher)
+function CategoryModals({ mutate }: Props) {
+  const lang = useLanguageStore(langSelector)
+  const [open, update] = useCategoryStore(({ open, update }) => [open, update])
+  const { data } = useSWR<IService[]>(`/category/?lang=${lang}`, getFetcher)
 
-  if (!services) {
-    return <Loader/>
+  if (!data) {
+    return <Loader />
   }
 
+  // console.log(data)
+  // debugger
   return (
     <>
-      {open && <CreateCategory mutate={mutate} services={services.data}/>}
-      {update && <UpdateCategory mutate={mutate} services={services.data}/>}
+      {open && <CreateCategory mutate={mutate} services={data} />}
+      {update && <UpdateCategory mutate={mutate} services={data} />}
     </>
   )
 }

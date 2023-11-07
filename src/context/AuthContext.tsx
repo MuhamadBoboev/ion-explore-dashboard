@@ -121,11 +121,11 @@ const AuthProvider = ({ children }: Props) => {
   const handleLogout = async () => {
     setUser(null)
     const storedToken = 'Bearer ' + window.localStorage.getItem(authConfig.storageTokenKeyName)!
-    await axiosInstance.get(authConfig.logoutEndpoint, {
-      headers: {
-        Authorization: storedToken
-      }
-    })
+    // await axiosInstance.get(authConfig.logoutEndpoint, {
+    //   headers: {
+    //     Authorization: storedToken
+    //   }
+    // })
     window.localStorage.removeItem('userData')
     window.localStorage.removeItem(authConfig.storageTokenKeyName)
     router.push('/login')

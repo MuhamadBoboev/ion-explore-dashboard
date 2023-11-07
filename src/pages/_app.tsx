@@ -1,5 +1,5 @@
 // ** React Imports
-import { ReactNode } from 'react'
+import { ReactNode, useEffect } from 'react'
 
 // ** Next Imports
 import Head from 'next/head'
@@ -55,6 +55,8 @@ import 'src/iconify-bundle/icons-bundle-react'
 // ** Global css styles
 import '../../styles/globals.css'
 import { SWRConfig } from 'swr'
+import { useLanguageStore } from '@shared/model/store'
+import { axiosInstance } from '@shared/api/axiosInstance'
 
 // ** Extend App Props with Emotion
 type ExtendedAppProps = AppProps & {
@@ -83,19 +85,19 @@ if (themeConfig.routingLoader) {
   })
 }
 
-const Guard = ({children, authGuard, guestGuard}: GuardProps) => {
+const Guard = ({ children, authGuard, guestGuard }: GuardProps) => {
   if (guestGuard) {
-    return <GuestGuard fallback={<Spinner/>}>{children}</GuestGuard>
+    return <GuestGuard fallback={<Spinner />}>{children}</GuestGuard>
   } else if (!guestGuard && !authGuard) {
     return <>{children}</>
   } else {
-    return <AuthGuard fallback={<Spinner/>}>{children}</AuthGuard>
+    return <AuthGuard fallback={<Spinner />}>{children}</AuthGuard>
   }
 }
 
 // ** Configure JSS & ClassName
 const App = (props: ExtendedAppProps) => {
-  const {Component, emotionCache = clientSideEmotionCache, pageProps} = props
+  const { Component, emotionCache = clientSideEmotionCache, pageProps } = props
 
   // Variables
   const contentHeightFixed = Component.contentHeightFixed ?? false
@@ -108,6 +110,16 @@ const App = (props: ExtendedAppProps) => {
 
   const guestGuard = Component.guestGuard ?? false
 
+  const { loadLang } = useLanguageStore(({ loadLang }) => ({ loadLang }))
+
+  useEffect(() => {
+    (async function loadLangList() {
+      const response = await axiosInstance.get('/lang')
+      if (Array.isArray(response.data)) {
+        loadLang(response.data)
+      }
+    })()
+  }, [])
   return (
 
     <CacheProvider value={emotionCache}>
@@ -117,15 +129,15 @@ const App = (props: ExtendedAppProps) => {
           name="description"
           content={`${themeConfig.templateName} – Material Design React Admin Dashboard Template – is the most developer friendly & highly customizable Admin Dashboard Template based on MUI v5.`}
         />
-        <meta name="keywords" content="Material Design, MUI, Admin Template, React Admin Template"/>
-        <meta name="viewport" content="initial-scale=1, width=device-width"/>
-        <meta name="robots" content="nofollow,noindex,noarchive"/>
+        <meta name="keywords" content="Material Design, MUI, Admin Template, React Admin Template" />
+        <meta name="viewport" content="initial-scale=1, width=device-width" />
+        <meta name="robots" content="nofollow,noindex,noarchive" />
       </Head>
 
       <AuthProvider>
-        <SettingsProvider {...(setConfig ? {pageSettings: setConfig()} : {})}>
+        <SettingsProvider {...(setConfig ? { pageSettings: setConfig() } : {})}>
           <SettingsConsumer>
-            {({settings}) => {
+            {({ settings }) => {
               return (
                 <ThemeComponent settings={settings}>
                   <Guard authGuard={authGuard} guestGuard={guestGuard}>
@@ -134,7 +146,7 @@ const App = (props: ExtendedAppProps) => {
                         revalidateOnFocus: false,
                       }}
                     >
-                    {getLayout(<Component {...pageProps} />)}
+                      {getLayout(<Component {...pageProps} />)}
                     </SWRConfig>
                   </Guard>
                   <ReactHotToast style={{
@@ -143,7 +155,7 @@ const App = (props: ExtendedAppProps) => {
                   }}>
                     <Toaster
                       position={settings.toastPosition}
-                      toastOptions={{className: 'react-hot-toast'}}
+                      toastOptions={{ className: 'react-hot-toast' }}
                       containerStyle={{
 
                       }}

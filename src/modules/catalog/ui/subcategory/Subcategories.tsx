@@ -13,7 +13,7 @@ import { Icon } from '@iconify/react'
 import Link from 'next/link'
 
 function Subcategories() {
-  const [handleCreateOpen] = useSubcategoryStore(({handleCreateOpen}) => [handleCreateOpen])
+  const [handleCreateOpen] = useSubcategoryStore(({ handleCreateOpen }) => [handleCreateOpen])
   const router = useRouter()
   const {
     data: category,
@@ -21,10 +21,10 @@ function Subcategories() {
     isLoading,
     error,
     mutate,
-  } = useSWR<{ data: ICategory }>(`/categories/${router.query.slug}`, getFetcher)
+  } = useSWR<{ data: ICategory }>(`https://api.promebel.tj/api/subcategories/${router.query.slug}`, getFetcher)
 
   if (error) {
-    return <Error500/>
+    return <Error500 />
   }
 
   return (
@@ -38,11 +38,11 @@ function Subcategories() {
         title={<>
           <IconButton
             title="Назад"
-            sx={{mr: 4}}
+            sx={{ mr: 4 }}
             href="/main/categories"
             component={Link}
           >
-            <Icon icon="ep:back"/>
+            <Icon icon="ep:back" />
           </IconButton>
           Подкатегории "{category?.data?.name || ''}"
         </>}

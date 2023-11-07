@@ -17,25 +17,25 @@ interface Props {
 export function bannerColumns({ handleUpdateOpen, trigger, mutate }: Props): GridColDef<IBanner>[] {
   return [
     { field: 'id', headerName: '#', width: 80 },
-    {
-      field: 'image',
-      headerName: 'Изображение',
-      width: 100,
-      renderCell: ({ row: { title, image } }) => (
-        <Avatar
-          src={image}
-          alt={title}
-        />
-      )
-    },
+    // {
+    //   field: 'image',
+    //   headerName: 'Изображение',
+    //   width: 100,
+    //   renderCell: ({ row: { title, image } }) => (
+    //     <Avatar
+    //       src={image}
+    //       alt={title}
+    //     />
+    //   )
+    // },
     { field: 'title', headerName: 'Заголовок', flex: 1 },
     { field: 'description', headerName: 'Описание', flex: 1 },
-    {
-      field: 'type',
-      headerName: 'Тип',
-      renderCell: ({ row: { type } }) => <>{getBannerTypeNameByKey(type)}</>,
-      width: 150,
-    },
+    // {
+    //   field: 'type',
+    //   headerName: 'Тип',
+    //   renderCell: ({ row: { type } }) => <>{getBannerTypeNameByKey(type)}</>,
+    //   width: 150,
+    // },
     { field: 'order', headerName: 'Порядок', width: 100 },
     {
       field: 'actions',

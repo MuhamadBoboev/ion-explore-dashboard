@@ -7,24 +7,27 @@ import CustomCard from '@shared/ui/CustomCard'
 import CustomPageHeader from '@shared/ui/CustomPageHeader'
 import { CategoryModals } from '@modules/catalog/ui/category/CategoryModals'
 import { CategoriesTable } from '@modules/catalog/ui/category/CategoriesTable'
+import { langSelector, useLanguageStore } from '@shared/model/store'
 
 function Categories() {
-  const [handleCreateOpen] = useCategoryStore(({handleCreateOpen}) => [handleCreateOpen])
+  const lang = useLanguageStore(langSelector)
+  const [handleCreateOpen] = useCategoryStore(({ handleCreateOpen }) => [handleCreateOpen])
   const {
-    data: categories,
+    data,
     isValidating,
     isLoading,
     error,
     mutate,
-  } = useSWR<{ data: ICategory[] }>('/categories', getFetcher)
+  } = useSWR<ICategory[]>(`/category/?lang=${lang}`, getFetcher)
 
   if (error) {
-    return <Error500/>
+    console.log(error)
+    return <Error500 />
   }
 
   return (
     <CustomCard>
-      <CategoryModals mutate={mutate}/>
+      <CategoryModals mutate={mutate} />
       <CustomPageHeader
         handleOpen={handleCreateOpen}
         title="Категории"
@@ -32,7 +35,7 @@ function Categories() {
       />
       <CategoriesTable
         loading={isLoading || isValidating}
-        categories={categories?.data || []}
+        categories={data || []}
         mutate={mutate}
       />
     </CustomCard>

@@ -5,27 +5,31 @@ import { getMinNumberErrorMessage } from '@shared/lib/getMinNumberErrorMessage'
 import { getMaxNumberErrorMessage } from '@shared/lib/getMaxNumberErrorMessage'
 
 export interface CategoryFormData {
+  // id: number
+  lang_id: number
   name: string
-  description?: string | null
+  // description?: string | null
   // icon?: string | null
-  order?: number | null
-  service_ids?: number[] | null
+  // order?: number | null
+  // service_ids?: number[] | null
 }
 
 const yupObject = {
   name: yup.string()
     .max(255, getMaxLengthErrorMessage())
     .required('Введите название категории'),
-  description: yup.string().nullable(),
+  // description: yup.string().nullable(),
   // icon: yup.string().required('Выберите иконку'),
-  service_ids: yup.array()
-    .of(yup.number().required())
-    .nullable(),
-  order: yup.number()
-    .min(-128, getMinNumberErrorMessage())
-    .max(127, getMaxNumberErrorMessage())
-    .transform(transformNumberOrNull)
-    .nullable()
+  lang_id: yup.number().required()
+  // lang_id:
+  // yup.array()
+  //   .of(yup.number().required())
+  //   .nullable(),
+  // order: yup.number()
+  //   .min(-128, getMinNumberErrorMessage())
+  //   .max(127, getMaxNumberErrorMessage())
+  //   .transform(transformNumberOrNull)
+  //   .nullable()
 }
 
 type FormType = yup.ObjectSchema<CategoryFormData, yup.AnyObject>

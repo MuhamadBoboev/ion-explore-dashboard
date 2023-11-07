@@ -7,16 +7,21 @@ import CustomPageHeader from '@shared/ui/CustomPageHeader'
 import { BannersTable } from '@modules/banner/ui/BannersTable'
 import { BannerModals } from '@modules/banner/ui/BannerModals'
 import { getFetcher } from '@shared/api/fetcher/getFetcher'
+import { langSelector, useLanguageStore } from '@shared/model/store'
+import { ContactTable } from './ContactTable'
 
 function Banners() {
+  const lang = useLanguageStore(langSelector)
   const [handleCreateOpen] = useBannerStore(({ handleCreateOpen }) => [handleCreateOpen])
   const {
-    data: banners,
+    data,
     isValidating,
     isLoading,
     error,
     mutate,
-  } = useSWR<{ data: IBanner[] }>('/contact/', getFetcher)
+  } = useSWR<IBanner>(`/contact/?lang=${lang}`, getFetcher, {
+    revalidateOnFocus: true,
+  })
 
   if (error) {
     return <Error500 />
@@ -27,14 +32,19 @@ function Banners() {
       <BannerModals mutate={mutate} />
       <CustomPageHeader
         handleOpen={handleCreateOpen}
-        title="Баннеры"
+        title="Контакты"
         buttonName="Создать"
       />
-      <BannersTable
+      <ContactTable
+        loading={isLoading}
+        contact={data || error}
+        mutate={mutate}
+      />
+      {/* <BannersTable
         loading={isLoading || isValidating}
         banners={banners?.data || []}
         mutate={mutate}
-      />
+      /> */}
     </CustomCard>
   )
 }

@@ -11,28 +11,30 @@ import { useCategoryStore } from '@modules/catalog/model/category/store'
 import { CategoryFormData, updateCategoryScheme } from '@modules/catalog/model/category/CategoryFormData'
 import { CategoryForm } from '@modules/catalog/ui/category/CategoryForm'
 import { IService } from '@modules/service'
+import { updateFetcherJson } from '@shared/api/fetcher/updateFetcherJson'
 
 interface Props {
   mutate: KeyedMutator<any>
   services: IService[]
 }
 
-function UpdateCategory({mutate, services}: Props) {
+function UpdateCategory({ mutate, services }: Props) {
   // const [images, setImages] = useState<File[]>([])
   const [category, handleUpdateClose] = useCategoryStore(
-    ({handleUpdateClose, update}) => [update, handleUpdateClose]
+    ({ handleUpdateClose, update }) => [update, handleUpdateClose]
   )
-  const {trigger, isMutating} = useSWRMutation(['/categories', category?.id], updateFetcher)
+  const { trigger, isMutating } = useSWRMutation(['/category', category?.id], updateFetcherJson)
   const {
     control,
-    formState: {errors},
+    formState: { errors },
     handleSubmit,
   } = useForm<CategoryFormData>({
     defaultValues: {
       name: category?.name,
-      description: category?.description,
-      order: category?.order,
-      service_ids: category?.services?.map(({id}) => id)
+      lang_id: category?.lang_id
+      // description: category?.description,
+      // order: category?.order,
+      // service_ids: category?.services?.map(({id}) => id)
     },
     mode: 'onBlur',
     resolver: yupResolver(updateCategoryScheme)
@@ -49,7 +51,8 @@ function UpdateCategory({mutate, services}: Props) {
       toast.error(error.response?.data.message || 'Произошла ошибка')
     }
   }
-
+  // console.log()
+  // debugger
   return (
     <CustomDialog
       title="Изменить"
@@ -67,7 +70,7 @@ function UpdateCategory({mutate, services}: Props) {
           type="submit"
           size="large"
           variant="contained"
-          sx={{mt: 5}}
+          sx={{ mt: 5 }}
         >
           Отправить
         </LoadingButton>

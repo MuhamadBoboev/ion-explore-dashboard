@@ -16,35 +16,27 @@ interface Props {
   trigger(id: number): Promise<any>
 }
 
-export function categoryColumns({handleUpdateOpen, trigger, mutate}: Props): GridColDef<ICategory>[] {
+export function categoryColumns({ handleUpdateOpen, trigger, mutate }: Props): GridColDef<ICategory>[] {
+
   return [
-    {field: 'id', headerName: '#', width: 80},
-    // {
-    //   field: 'icon',
-    //   headerName: 'Иконка',
-    //   width: 100,
-    //   renderCell: ({row: {name, icon}}) => (
-    //     <Avatar
-    //       src={icon}
-    //       alt={name}
-    //     />
-    //   )
-    // },
-    {field: 'name', headerName: 'Название', flex: 1},
-    {field: 'description', headerName: 'Описание', flex: 1},
-    {field: 'order', headerName: 'Порядок', width: 100},
+    { field: 'id', headerName: '#', width: 80 },
+
+    { field: 'name', headerName: 'Название', flex: 1 },
+    // { field: 'description', headerName: 'Описание', flex: 1 },
+    // { field: 'order', headerName: 'Порядок', width: 100 },
     {
       field: 'actions',
       type: 'actions',
       width: 350,
-      getActions: ({row}) => [
-        <Link style={{marginRight: 8}} href={`/main/categories/${row.slug}`}>
+      getActions: ({ row }) => [
+
+        <Link style={{ marginRight: 8 }} href={`https://api.promebel.tj/api/subcategories/${row.id}`}>
           <Button variant="outlined">Подкатегории</Button>
         </Link>,
         <GridActionsCellItem
           title="Изменить"
           label="Изменить"
-          icon={<EditIcon sx={{fontSize: 24}}/>}
+          icon={<EditIcon sx={{ fontSize: 24 }} />}
           onClick={() => {
             handleUpdateOpen(row)
           }}
@@ -52,7 +44,7 @@ export function categoryColumns({handleUpdateOpen, trigger, mutate}: Props): Gri
         <GridActionsCellItem
           label="Удалить"
           title="Удалить"
-          icon={<DeleteIcon sx={{fontSize: 24}}/>}
+          icon={<DeleteIcon sx={{ fontSize: 24 }} />}
           onClick={async () => {
             try {
               const response = await trigger(row.id)

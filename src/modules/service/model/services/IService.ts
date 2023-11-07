@@ -4,15 +4,9 @@ import { IPagination } from '@shared/model/IPagination'
 export interface IService {
   id: number
   name: string
-  description: string | null
-  image: string
-  images: IServiceImage[]
-  slug: string
-  price: number
-  unit: string
-  sku: string
+  lang_id: number
 }
 
-export interface IServiceData extends IPagination {
-  data: IService[]
-}
+// export interface IServiceData extends IPagination {
+//   data: IService[]
+// }

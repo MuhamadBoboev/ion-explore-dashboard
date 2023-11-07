@@ -1,6 +1,7 @@
 // ** MUI Imports
 import Box from '@mui/material/Box'
 import IconButton from '@mui/material/IconButton'
+import { DropdownLanguage } from '@shared/ui/DropdownLanguage'
 
 // ** Icon Imports
 import Icon from 'src/@core/components/icon'
@@ -35,6 +36,7 @@ const AppBarContent = (props: Props) => {
         <ModeToggler settings={settings} saveSettings={saveSettings} />
       </Box>
       <Box className='actions-right' sx={{ display: 'flex', alignItems: 'center' }}>
+        <DropdownLanguage />
         <UserDropdown settings={settings} />
       </Box>
     </Box>

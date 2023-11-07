@@ -6,6 +6,7 @@ import { ICategory } from '@modules/catalog'
 import { useCategoryStore } from '@modules/catalog/model/category/store'
 import { categoryColumns } from '@modules/catalog/model/category/categoryColumns'
 import { KeyedMutator } from 'swr'
+import { langSelector, useLanguageStore } from '@shared/model/store'
 
 interface Props {
   loading: boolean
@@ -13,16 +14,17 @@ interface Props {
   mutate: KeyedMutator<any>
 }
 
-function CategoriesTable({categories, loading, mutate}: Props) {
-  const {trigger} = useSWRMutation('/categories', deleteFetcher)
-  const [handleUpdateOpen] = useCategoryStore(({handleUpdateOpen}) => [handleUpdateOpen])
+function CategoriesTable({ categories, loading, mutate }: Props) {
+  const lang = useLanguageStore(langSelector)
+  const { trigger } = useSWRMutation(`/category/?lang=${lang}`, deleteFetcher)
+  const [handleUpdateOpen] = useCategoryStore(({ handleUpdateOpen }) => [handleUpdateOpen])
 
   return (
     <DataGrid
-      slots={{loadingOverlay: LinearProgress}}
+      slots={{ loadingOverlay: LinearProgress }}
       hideFooter
       loading={loading}
-      columns={categoryColumns({handleUpdateOpen, trigger, mutate})}
+      columns={categoryColumns({ handleUpdateOpen, trigger, mutate })}
       rows={categories}
       rowSelection={false}
       autoHeight

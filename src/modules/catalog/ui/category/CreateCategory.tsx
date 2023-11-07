@@ -17,21 +17,21 @@ interface Props {
   mutate: KeyedMutator<any>
 }
 
-function CreateCategory({services, mutate}: Props) {
+function CreateCategory({ services, mutate }: Props) {
   // const [images, setImages] = useState<File[]>([])
-  const {trigger, isMutating} = useSWRMutation('/categories', postFetcher)
-  const [handleCreateClose] = useCategoryStore(({handleCreateClose}) => [handleCreateClose])
+  const { trigger, isMutating } = useSWRMutation('/categories', postFetcher)
+  const [handleCreateClose] = useCategoryStore(({ handleCreateClose }) => [handleCreateClose])
   const {
     control,
-    formState: {errors},
+    formState: { errors },
     handleSubmit,
     // setError,
     // setValue,
   } = useForm<CategoryFormData>({
     mode: 'onBlur',
-    defaultValues: {
-      service_ids: [],
-    },
+    // defaultValues: {
+    //   service_ids: [],
+    // },
     resolver: yupResolver(createCategoryScheme)
   })
 
@@ -52,6 +52,7 @@ function CreateCategory({services, mutate}: Props) {
     }
   }
 
+  debugger
   return (
     <CustomDialog
       title="Создать"
@@ -69,7 +70,7 @@ function CreateCategory({services, mutate}: Props) {
           type="submit"
           size="large"
           variant="contained"
-          sx={{mt: 5}}
+          sx={{ mt: 5 }}
         >
           Отправить
         </LoadingButton>

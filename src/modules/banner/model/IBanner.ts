@@ -1,12 +1,11 @@
 export interface IBanner {
-  id: number
-  title: string
-  description?: string
-  image: string
-  button_text?: string
-  link?: string
-  order?: number
-  type: BannerType
+  address: string,
+  facebook: string,
+  id: number,
+  instagram: string,
+  lang_id: string,
+  phone: string,
+  telegram: string
 }
 
 export type BannerType = 'main' | 'secondary' | 'tertiary'

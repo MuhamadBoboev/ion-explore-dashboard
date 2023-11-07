@@ -1,12 +1,7 @@
 import { IService } from '@modules/service'
 
 export interface ISubcategory {
-  id: number
+  category_id: number,
+  id: number,
   name: string
-  description: string | null
-  slug: string
-  icon: string
-  category_id: number
-  services: IService[]
-  order: number | null
 }
