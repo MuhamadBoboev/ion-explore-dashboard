@@ -11,12 +11,12 @@ interface Props {
   categoryId: number
 }
 
-function SubcategoryModals({mutate, categoryId}: Props) {
-  const [open, update] = useSubcategoryStore(({open, update}) => [open, update])
-  const {data: services} = useSWR<{ data: IService[] }>('/services?per_page=1000000', getFetcher)
+function SubcategoryModals({ mutate, categoryId }: Props) {
+  const [open, update] = useSubcategoryStore(({ open, update }) => [open, update])
+  const { data: services } = useSWR<{ data: IService[] }>('/sub-category/', getFetcher)
 
   if (!services) {
-    return <Loader/>
+    return <Loader />
   }
 
   return (

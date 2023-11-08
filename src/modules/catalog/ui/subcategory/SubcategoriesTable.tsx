@@ -13,16 +13,17 @@ interface Props {
   mutate: KeyedMutator<any>
 }
 
-function SubcategoriesTable({subcategories, loading, mutate}: Props) {
-  const {trigger} = useSWRMutation('/subcategories', deleteFetcher)
-  const [handleUpdateOpen] = useSubcategoryStore(({handleUpdateOpen}) => [handleUpdateOpen])
+function SubcategoriesTable({ subcategories, loading, mutate }: Props) {
+  const { trigger } = useSWRMutation('/category', deleteFetcher)
+  const [handleUpdateOpen] = useSubcategoryStore(({ handleUpdateOpen }) => [handleUpdateOpen])
 
+  console.log(subcategories)
   return (
     <DataGrid
-      slots={{loadingOverlay: LinearProgress}}
+      slots={{ loadingOverlay: LinearProgress }}
       hideFooter
       loading={loading}
-      columns={subcategoryColumns({handleUpdateOpen, trigger, mutate})}
+      columns={subcategoryColumns({ handleUpdateOpen, trigger, mutate })}
       rows={subcategories}
       rowSelection={false}
       autoHeight

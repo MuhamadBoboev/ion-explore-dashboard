@@ -1,9 +1,9 @@
-import { create } from "zustand"
-import { ILang } from "./ILang"
-
+import { create } from 'zustand'
+import { ILang } from './ILang'
 
 type State = {
-  lang: string
+  timeLang: string
+  lang: string | null
   langList: ILang[]
 }
 
@@ -12,17 +12,20 @@ type Action = {
   selectLang(lang: string): void
 }
 
-export const useLanguageStore = create<State & Action>((set)=> ({
-  lang: 'ru',
+let langStorage = localStorage.getItem('lang')
+export const useLanguageStore = create<State & Action>(set => ({
+  timeLang: 'asd',
+  lang: langStorage,
   langList: [],
   loadLang(langList) {
-      set(()=> ({langList}))
+    set(() => ({ langList }))
   },
-  selectLang(lang: string) {
-    set(()=>({lang}))
+  selectLang(lang: 'ru') {
+    localStorage.setItem('lang', lang)
+    set(() => ({ lang }))
   }
-
 }))
 
-export const langIdSelector = ({lang, langList}: {lang: string, langList: ILang[]}) => langList.find(({code}) => code === lang)?.id
-export const langSelector = ({lang}: {lang: string}) => lang
+export const langIdSelector = ({ lang, langList }: { lang: string; langList: ILang[] }) =>
+  langList.find(({ code }) => code === lang)?.id
+export const langSelector = ({ lang }: { lang: string }) => lang

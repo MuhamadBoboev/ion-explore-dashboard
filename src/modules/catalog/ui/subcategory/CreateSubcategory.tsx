@@ -19,13 +19,13 @@ interface Props {
   services: IService[]
 }
 
-function CreateSubcategory({categoryId, mutate, services}: Props) {
+function CreateSubcategory({ categoryId, mutate, services }: Props) {
   // const [images, setImages] = useState<File[]>([])
-  const {trigger, isMutating} = useSWRMutation('/subcategories', postFetcher)
-  const [handleCreateClose] = useSubcategoryStore(({handleCreateClose}) => [handleCreateClose])
+  const { trigger, isMutating } = useSWRMutation('/sub-category', postFetcher)
+  const [handleCreateClose] = useSubcategoryStore(({ handleCreateClose }) => [handleCreateClose])
   const {
     control,
-    formState: {errors},
+    formState: { errors },
     handleSubmit,
     // setError,
     // setValue,
@@ -72,7 +72,7 @@ function CreateSubcategory({categoryId, mutate, services}: Props) {
           type="submit"
           size="large"
           variant="contained"
-          sx={{mt: 5}}
+          sx={{ mt: 5 }}
         >
           Отправить
         </LoadingButton>

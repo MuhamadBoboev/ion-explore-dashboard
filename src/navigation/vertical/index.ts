@@ -6,17 +6,17 @@ const navigation = (): VerticalNavItemsType => {
     {
       title: 'Контакты',
       path: '/main/banners',
-      icon: 'ion:images-outline',
+      icon: 'ion:images-outline'
     },
     {
       title: 'Категории',
       path: '/main/categories',
-      icon: 'ep:menu',
+      icon: 'ep:menu'
     },
     {
       title: 'Поставщики',
       path: '/main/providers',
-      icon: 'ic:baseline-shop-2',
+      icon: 'ic:baseline-shop-2'
     },
     {
       title: 'Товары',
@@ -24,24 +24,24 @@ const navigation = (): VerticalNavItemsType => {
       children: [
         {
           title: 'Все товары',
-          path: '/main/products',
+          path: '/main/products'
         },
         {
           title: 'Добавить товар',
-          path: '/main/products/create',
+          path: '/main/products/create'
         },
         {
           title: 'Типы товаров',
-          path: '/main/products/product-types',
+          path: '/main/products/product-types'
         },
         {
           title: 'Коллекции',
-          path: '/main/products/collections',
+          path: '/main/products/collections'
         },
         {
           title: 'Атрибуты',
-          path: '/main/products/attributes',
-        },
+          path: '/main/products/attributes'
+        }
       ]
     },
     {
@@ -51,53 +51,53 @@ const navigation = (): VerticalNavItemsType => {
       children: [
         {
           title: 'Все специалисты',
-          path: '/main/specialists',
+          path: '/main/specialists'
         },
         {
           title: 'Категории',
-          path: '/main/specialists/categories',
-        },
+          path: '/main/specialists/categories'
+        }
       ]
     },
     {
       title: 'Услуги',
       path: '/main/services',
-      icon: 'mdi:account-service',
+      icon: 'mdi:account-service'
     },
     {
       title: 'Проекты',
       path: '/main/projects',
-      icon: 'octicon:project-roadmap-16',
+      icon: 'octicon:project-roadmap-16'
     },
     {
       title: 'Админы',
       path: '/main/admins',
-      icon: 'grommet-icons:user-admin',
+      icon: 'grommet-icons:user-admin'
     },
     {
       title: 'Пользователи',
       path: '/main/users',
-      icon: 'fa:users',
+      icon: 'fa:users'
     },
     {
       title: 'Методы оплаты',
       path: '/main/payment-methods',
-      icon: 'wpf:bank-cards',
+      icon: 'wpf:bank-cards'
     },
     {
       title: 'Типы доставки',
       path: '/main/shipping-types',
-      icon: 'iconamoon:delivery-fast-fill',
+      icon: 'iconamoon:delivery-fast-fill'
     },
     {
       title: 'Локации доставки',
       path: '/main/shipping-locations',
-      icon: 'ph:map-pin-line',
+      icon: 'ph:map-pin-line'
     },
     {
       title: 'Все заказы',
       path: '/main/orders',
-      icon: 'game-icons:box-unpacking',
+      icon: 'game-icons:box-unpacking'
     },
     {
       title: 'Вакансии',
@@ -105,18 +105,18 @@ const navigation = (): VerticalNavItemsType => {
       children: [
         {
           path: '/main/vacancies',
-          title: 'Все вакансии',
+          title: 'Все вакансии'
         },
         {
           path: '/main/vacancies/create',
-          title: 'Добавить вакансию',
+          title: 'Добавить вакансию'
         },
         {
           path: '/main/vacancies/categories',
-          title: 'Категории',
-        },
+          title: 'Категории'
+        }
       ]
-    },
+    }
   ]
 }
 

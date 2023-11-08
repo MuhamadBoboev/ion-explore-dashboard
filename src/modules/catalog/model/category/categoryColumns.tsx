@@ -9,6 +9,7 @@ import { ICategory } from '@modules/catalog'
 import Link from 'next/link'
 import { KeyedMutator } from 'swr'
 import Button from '@mui/material/Button'
+import { useLanguageStore } from '@shared/model/store'
 
 interface Props {
   handleUpdateOpen(data: ICategory): void
@@ -17,6 +18,7 @@ interface Props {
 }
 
 export function categoryColumns({ handleUpdateOpen, trigger, mutate }: Props): GridColDef<ICategory>[] {
+  const { lang } = useLanguageStore(({ lang }) => ({ lang }))
 
   return [
     { field: 'id', headerName: '#', width: 80 },
@@ -29,8 +31,7 @@ export function categoryColumns({ handleUpdateOpen, trigger, mutate }: Props): G
       type: 'actions',
       width: 350,
       getActions: ({ row }) => [
-
-        <Link style={{ marginRight: 8 }} href={`https://api.promebel.tj/api/subcategories/${row.id}`}>
+        <Link style={{ marginRight: 8 }} href={`/main/categories/${row.id}`}>
           <Button variant="outlined">Подкатегории</Button>
         </Link>,
         <GridActionsCellItem
@@ -49,10 +50,9 @@ export function categoryColumns({ handleUpdateOpen, trigger, mutate }: Props): G
             try {
               const response = await trigger(row.id)
               await mutate()
-              toast.success(response.message)
+              toast.success('Успешно удалено!')
             } catch (e) {
-              const error = e as AxiosError<{ message: string }>
-              toast.error(error.response?.data.message || 'Произошла ошибка')
+              toast.error('Произошла ошибка')
             }
           }}
         />

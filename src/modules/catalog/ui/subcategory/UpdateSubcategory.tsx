@@ -11,6 +11,7 @@ import { useSubcategoryStore } from '@modules/catalog/model/subcategory/store'
 import { SubcategoryFormData, updateSubcategoryScheme } from '@modules/catalog/model/subcategory/SubcategoryFormData'
 import { SubcategoryForm } from '@modules/catalog/ui/subcategory/SubcategoryForm'
 import { IService } from '@modules/service'
+import { updateFetcherJson } from '@shared/api/fetcher/updateFetcherJson'
 
 interface Props {
   categoryId: number
@@ -18,23 +19,19 @@ interface Props {
   services: IService[]
 }
 
-function UpdateSubcategory({categoryId, mutate, services}: Props) {
+function UpdateSubcategory({ categoryId, mutate, services }: Props) {
   // const [images, setImages] = useState<File[]>([])
   const [subcategory, handleUpdateClose] = useSubcategoryStore(
-    ({handleUpdateClose, update}) => [update, handleUpdateClose]
+    ({ handleUpdateClose, update }) => [update, handleUpdateClose]
   )
-  const {trigger, isMutating} = useSWRMutation(['/subcategories', subcategory?.id], updateFetcher)
+  const { trigger, isMutating } = useSWRMutation(['/sub-category', subcategory?.id], updateFetcherJson)
   const {
     control,
-    formState: {errors},
+    formState: { errors },
     handleSubmit,
   } = useForm<SubcategoryFormData>({
     defaultValues: {
-      name: subcategory?.name,
-      description: subcategory?.description,
-      order: subcategory?.order,
-      category_id: categoryId,
-      service_ids: subcategory?.services?.map(({id}) => id),
+      name: subcategory?.name
     },
     mode: 'onBlur',
     resolver: yupResolver(updateSubcategoryScheme)
@@ -69,7 +66,7 @@ function UpdateSubcategory({categoryId, mutate, services}: Props) {
           type="submit"
           size="large"
           variant="contained"
-          sx={{mt: 5}}
+          sx={{ mt: 5 }}
         >
           Отправить
         </LoadingButton>

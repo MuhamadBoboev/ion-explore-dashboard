@@ -11,6 +11,8 @@ import { CategoryFormData, createCategoryScheme } from '@modules/catalog/model/c
 import { CategoryForm } from '@modules/catalog/ui/category/CategoryForm'
 import { IService } from '@modules/service'
 import { KeyedMutator } from 'swr'
+import { postFetcherJson } from '@shared/api/fetcher/postFetcherJson'
+import { useLanguageStore } from '@shared/model/store'
 
 interface Props {
   services: IService[]
@@ -19,8 +21,10 @@ interface Props {
 
 function CreateCategory({ services, mutate }: Props) {
   // const [images, setImages] = useState<File[]>([])
-  const { trigger, isMutating } = useSWRMutation('/categories', postFetcher)
+  const { trigger, isMutating } = useSWRMutation('/category/', postFetcherJson)
   const [handleCreateClose] = useCategoryStore(({ handleCreateClose }) => [handleCreateClose])
+  const lang = useLanguageStore(({ langList, lang }) => (langList.find((el) => el.code === lang)))
+
   const {
     control,
     formState: { errors },
@@ -29,9 +33,9 @@ function CreateCategory({ services, mutate }: Props) {
     // setValue,
   } = useForm<CategoryFormData>({
     mode: 'onBlur',
-    // defaultValues: {
-    //   service_ids: [],
-    // },
+    defaultValues: {
+      lang_id: lang?.id,
+    },
     resolver: yupResolver(createCategoryScheme)
   })
 
@@ -50,9 +54,12 @@ function CreateCategory({ services, mutate }: Props) {
       const error = e as AxiosError<{ message: string }>
       toast.error(error.response?.data.message || 'Произошла ошибка')
     }
+    console.log(data)
+
+
   }
 
-  debugger
+  // debugger
   return (
     <CustomDialog
       title="Создать"

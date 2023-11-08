@@ -16,7 +16,7 @@ interface Props {
   // setValue: UseFormSetValue<SubcategoryFormData>
 }
 
-function SubcategoryForm({control, errors, services}: Props) {
+function SubcategoryForm({ control, errors, services }: Props) {
 
   return (
     <>
@@ -36,7 +36,7 @@ function SubcategoryForm({control, errors, services}: Props) {
         errorMessage={errors.name?.message}
         required
       />
-      <TextFieldCustom
+      {/* <TextFieldCustom
         name="description"
         control={control}
         label="Описание"
@@ -45,8 +45,8 @@ function SubcategoryForm({control, errors, services}: Props) {
           multiline: true,
           rows: 4,
         })}
-      />
-      <ModalFormControl errorMessage={errors.service_ids?.message}>
+      /> */}
+      {/* <ModalFormControl errorMessage={errors.service_ids?.message}>
         <InputLabel id="select-service_ids">Доступные услуги</InputLabel>
         <Controller
           name="service_ids"
@@ -66,14 +66,14 @@ function SubcategoryForm({control, errors, services}: Props) {
             </Select>
           )}
         />
-      </ModalFormControl>
-      <TextFieldCustom
+      </ModalFormControl> */}
+      {/* <TextFieldCustom
         name="order"
         control={control}
         label="Порядок"
         errorMessage={errors.order?.message}
         typeNumber
-      />
+      /> */}
     </>
   )
 }

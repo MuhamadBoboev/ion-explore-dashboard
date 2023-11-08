@@ -10,7 +10,8 @@ import { langIdSelector, useLanguageStore } from '@shared/model/store'
 import { useState } from 'react'
 import { ILang } from '@shared/model/ILang'
 import { langSelector } from '../../../../shared/model/store';
-import { SelectLanguage } from '@shared/ui/SelectLanguage'
+import { LangForm } from '@shared/ui/LangForm'
+// import { SelectLanguage } from '@shared/ui/SelectLanguage'
 
 interface Props {
   services: IService[]
@@ -60,7 +61,7 @@ function CategoryForm({ control, errors, services }: Props) {
         errorMessage={errors.lang_id?.message}
         required
       /> */}
-      <SelectLanguage />
+      <LangForm control={control} errorMessage={errors.lang_id?.message} />
       {/* <Select
         name="lang_id"
         labelId="lang_id"

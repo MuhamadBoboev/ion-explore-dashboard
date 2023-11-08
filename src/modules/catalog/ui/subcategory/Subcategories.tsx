@@ -11,17 +11,21 @@ import { SubcategoryModals } from '@modules/catalog/ui/subcategory/SubcategoryMo
 import IconButton from '@mui/material/IconButton'
 import { Icon } from '@iconify/react'
 import Link from 'next/link'
+import { useLanguageStore } from '@shared/model/store'
+import { debug } from 'console'
 
 function Subcategories() {
+  const { lang } = useLanguageStore(({ lang }) => ({ lang }))
   const [handleCreateOpen] = useSubcategoryStore(({ handleCreateOpen }) => [handleCreateOpen])
   const router = useRouter()
   const {
-    data: category,
+    data,
     isValidating,
     isLoading,
     error,
     mutate,
-  } = useSWR<{ data: ICategory }>(`https://api.promebel.tj/api/subcategories/${router.query.slug}`, getFetcher)
+  } = useSWR<ICategory>(`/category/${router.query.slug}?lang=${lang}`, getFetcher)
+
 
   if (error) {
     return <Error500 />
@@ -31,7 +35,7 @@ function Subcategories() {
     <CustomCard>
       <SubcategoryModals
         mutate={mutate}
-        categoryId={category?.data?.id || 0}
+        categoryId={data?.id || 0}
       />
       <CustomPageHeader
         handleOpen={handleCreateOpen}
@@ -44,13 +48,13 @@ function Subcategories() {
           >
             <Icon icon="ep:back" />
           </IconButton>
-          Подкатегории "{category?.data?.name || ''}"
+          Подкатегории "{data?.name || ''}"
         </>}
         buttonName="Создать"
       />
       <SubcategoriesTable
         loading={isLoading || isValidating}
-        subcategories={category?.data?.subcategories || []}
+        subcategories={data?.subcategory || []}
         mutate={mutate}
       />
     </CustomCard>

@@ -10,7 +10,7 @@ export async function getFetcher(url: string) {
       headers: {
         Authorization: getBearerToken(),
         'Accept-Language': lang
-      },
+      }
     })
     return response.data
   } catch (e) {

@@ -15,12 +15,12 @@ export interface CategoryFormData {
 }
 
 const yupObject = {
-  name: yup.string()
-    .max(255, getMaxLengthErrorMessage())
-    .required('Введите название категории'),
+  // name: yup.string().max(255, getMaxLengthErrorMessage()).required('Введите название категории'),
+  // lang_id: yup.number()
+  name: yup.string().max(255, getMaxLengthErrorMessage()).required('Введите название категории'),
+  lang_id: yup.number().required()
   // description: yup.string().nullable(),
   // icon: yup.string().required('Выберите иконку'),
-  lang_id: yup.number().required()
   // lang_id:
   // yup.array()
   //   .of(yup.number().required())
@@ -37,7 +37,6 @@ type FormType = yup.ObjectSchema<CategoryFormData, yup.AnyObject>
 export const createCategoryScheme: FormType = yup.object().shape(yupObject)
 
 export const updateCategoryScheme: FormType = yup.object().shape({
-  ...yupObject,
+  ...yupObject
   // icon: yup.string().nullable(),
 })
-
