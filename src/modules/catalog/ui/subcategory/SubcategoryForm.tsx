@@ -37,6 +37,13 @@ function SubcategoryForm({ control, errors, services }: Props) {
         required
       />
       {/* <TextFieldCustom
+        name="category_id"
+        control={control}
+        label="Название"
+        errorMessage={errors.category_id?.message}
+        required
+      /> */}
+      {/* <TextFieldCustom
         name="description"
         control={control}
         label="Описание"

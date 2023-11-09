@@ -14,7 +14,7 @@ interface Props {
 }
 
 function SubcategoriesTable({ subcategories, loading, mutate }: Props) {
-  const { trigger } = useSWRMutation('/category', deleteFetcher)
+  const { trigger } = useSWRMutation('/sub-category', deleteFetcher)
   const [handleUpdateOpen] = useSubcategoryStore(({ handleUpdateOpen }) => [handleUpdateOpen])
 
   console.log(subcategories)

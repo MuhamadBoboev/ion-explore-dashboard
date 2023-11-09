@@ -15,9 +15,9 @@ interface Props {
   trigger(id: number): Promise<any>
 }
 
-export function subcategoryColumns({handleUpdateOpen, trigger, mutate}: Props): GridColDef<ISubcategory>[] {
+export function subcategoryColumns({ handleUpdateOpen, trigger, mutate }: Props): GridColDef<ISubcategory>[] {
   return [
-    {field: 'id', headerName: '#', width: 80},
+    { field: 'id', headerName: '#', width: 80 },
     // {
     //   field: 'icon',
     //   headerName: 'Иконка',
@@ -29,18 +29,18 @@ export function subcategoryColumns({handleUpdateOpen, trigger, mutate}: Props): 
     //     />
     //   )
     // },
-    {field: 'name', headerName: 'Название', flex: 1},
-    {field: 'description', headerName: 'Описание', flex: 1},
-    {field: 'order', headerName: 'Порядок', width: 100},
+    { field: 'name', headerName: 'Название', flex: 1 },
+    // {field: 'description', headerName: 'Описание', flex: 1},
+    // {field: 'order', headerName: 'Порядок', width: 100},
     {
       field: 'actions',
       type: 'actions',
       width: 90,
-      getActions: ({row}) => [
+      getActions: ({ row }) => [
         <GridActionsCellItem
           title="Изменить"
           label="Изменить"
-          icon={<EditIcon sx={{fontSize: 24}}/>}
+          icon={<EditIcon sx={{ fontSize: 24 }} />}
           onClick={() => {
             handleUpdateOpen(row)
           }}
@@ -48,7 +48,7 @@ export function subcategoryColumns({handleUpdateOpen, trigger, mutate}: Props): 
         <GridActionsCellItem
           label="Удалить"
           title="Удалить"
-          icon={<DeleteIcon sx={{fontSize: 24}}/>}
+          icon={<DeleteIcon sx={{ fontSize: 24 }} />}
           onClick={async () => {
             try {
               const response = await trigger(row.id)

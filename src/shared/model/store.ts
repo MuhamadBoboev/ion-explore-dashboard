@@ -2,7 +2,6 @@ import { create } from 'zustand'
 import { ILang } from './ILang'
 
 type State = {
-  timeLang: string
   lang: string | null
   langList: ILang[]
 }
@@ -12,16 +11,13 @@ type Action = {
   selectLang(lang: string): void
 }
 
-let langStorage = localStorage.getItem('lang')
 export const useLanguageStore = create<State & Action>(set => ({
-  timeLang: 'asd',
-  lang: langStorage,
+  lang: 'ru',
   langList: [],
   loadLang(langList) {
     set(() => ({ langList }))
   },
   selectLang(lang: 'ru') {
-    localStorage.setItem('lang', lang)
     set(() => ({ lang }))
   }
 }))

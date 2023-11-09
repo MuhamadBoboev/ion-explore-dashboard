@@ -12,6 +12,7 @@ import { createSubcategoryScheme, SubcategoryFormData } from '@modules/catalog/m
 import { SubcategoryForm } from '@modules/catalog/ui/subcategory/SubcategoryForm'
 import { KeyedMutator } from 'swr'
 import { IService } from '@modules/service'
+import { postFetcherJson } from '@shared/api/fetcher/postFetcherJson'
 
 interface Props {
   categoryId: number
@@ -21,7 +22,7 @@ interface Props {
 
 function CreateSubcategory({ categoryId, mutate, services }: Props) {
   // const [images, setImages] = useState<File[]>([])
-  const { trigger, isMutating } = useSWRMutation('/sub-category', postFetcher)
+  const { trigger, isMutating } = useSWRMutation('/sub-category/', postFetcherJson)
   const [handleCreateClose] = useSubcategoryStore(({ handleCreateClose }) => [handleCreateClose])
   const {
     control,
@@ -32,8 +33,7 @@ function CreateSubcategory({ categoryId, mutate, services }: Props) {
   } = useForm<SubcategoryFormData>({
     mode: 'onBlur',
     defaultValues: {
-      category_id: categoryId,
-      service_ids: [],
+      category_id: categoryId
     },
     resolver: yupResolver(createSubcategoryScheme)
   })

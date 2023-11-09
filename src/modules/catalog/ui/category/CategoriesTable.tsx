@@ -15,7 +15,7 @@ interface Props {
 }
 
 function CategoriesTable({ categories, loading, mutate }: Props) {
-  const lang = useLanguageStore(langSelector)
+  // const lang = useLanguageStore(langSelector)
   const { trigger } = useSWRMutation(`/category`, deleteFetcher)
   const [handleUpdateOpen] = useCategoryStore(({ handleUpdateOpen }) => [handleUpdateOpen])
 

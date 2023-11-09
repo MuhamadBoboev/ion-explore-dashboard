@@ -4,32 +4,31 @@ import Error500 from '../../../../pages/500'
 import CustomCard from '@shared/ui/CustomCard'
 import CustomPageHeader from '@shared/ui/CustomPageHeader'
 import { useSpecialistStore } from '@modules/specialist/model/specialists/store'
-import { ISpecialistData } from '@modules/specialist/model/specialists/ISpecialist'
+import { ISpecialist, ISpecialistData } from '@modules/specialist/model/specialists/ISpecialist'
 import { SpecialistModals } from '@modules/specialist/ui/specialists/SpecialistModals'
 import { SpecialistsTable } from '@modules/specialist/ui/specialists/SpecialistsTable'
 import { useState } from 'react'
+import { useLanguageStore } from '@shared/model/store'
 
 function Specialists() {
-  const [paginationModel, setPaginationModel] = useState({
-    pageSize: 10,
-    page: 0,
-  })
-  const [handleCreateOpen] = useSpecialistStore(({handleCreateOpen}) => [handleCreateOpen])
+  const { lang } = useLanguageStore(({ lang }) => ({ lang }))
+  const [handleCreateOpen] = useSpecialistStore(({ handleCreateOpen }) => [handleCreateOpen])
   const {
     data: specialists,
     isValidating,
     isLoading,
     error,
     mutate,
-  } = useSWR<ISpecialistData>(`/specialists?page=${paginationModel.page + 1}&per_page=${paginationModel.pageSize}`, getFetcher)
+  } = useSWR<ISpecialist[]>(`/guide/?lang=${lang}`, getFetcher)
 
   if (error) {
-    return <Error500/>
+    return <Error500 />
   }
+  // console.log(specialists)
 
   return (
     <CustomCard>
-      <SpecialistModals mutate={mutate}/>
+      <SpecialistModals mutate={mutate} />
       <CustomPageHeader
         handleOpen={handleCreateOpen}
         title="Специалисты"
@@ -39,8 +38,6 @@ function Specialists() {
         loading={isLoading || isValidating}
         specialists={specialists}
         mutate={mutate}
-        paginationModel={paginationModel}
-        setPaginationModel={setPaginationModel}
       />
     </CustomCard>
   )

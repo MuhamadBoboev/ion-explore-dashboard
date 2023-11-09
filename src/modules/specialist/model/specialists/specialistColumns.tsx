@@ -15,38 +15,38 @@ interface Props {
   trigger(id: number): Promise<any>
 }
 
-export function specialistColumns({handleUpdateOpen, trigger, mutate}: Props): GridColDef<ISpecialist>[] {
+export function specialistColumns({ handleUpdateOpen, trigger, mutate }: Props): GridColDef<ISpecialist>[] {
   return [
-    {field: 'id', headerName: '#', width: 80},
+    { field: 'id', headerName: '#', width: 80 },
     {
       field: 'avatar',
       headerName: 'Аватар',
       width: 100,
-      renderCell: ({row: {name, avatar}}) => (
+      renderCell: ({ row: { name, image } }) => (
         <Avatar
-          src={avatar || name}
+          src={image || name}
           alt={name}
         />
       )
     },
-    {field: 'name', headerName: 'Название', flex: 1},
-    {field: 'description', headerName: 'Описание', flex: 1},
+    { field: 'name', headerName: 'Имя', flex: 1 },
+    { field: 'description', headerName: 'Специальность', flex: 1 },
     {
       field: 'actions',
       type: 'actions',
       width: 150,
-      getActions: ({row}) => [
-        <Link href={`/main/specialists/${row.slug}`}>
-          <GridActionsCellItem
-            title="Изображении"
-            label="Изображении"
-            icon={<CollectionsIcon sx={{fontSize: 24}}/>}
-          />
-        </Link>,
+      getActions: ({ row }) => [
+        // <Link href={`/main/specialists/${row.slug}`}>
+        //   <GridActionsCellItem
+        //     title="Изображении"
+        //     label="Изображении"
+        //     icon={<CollectionsIcon sx={{fontSize: 24}}/>}
+        //   />
+        // </Link>,
         <GridActionsCellItem
           title="Изменить"
           label="Изменить"
-          icon={<EditIcon sx={{fontSize: 24}}/>}
+          icon={<EditIcon sx={{ fontSize: 24 }} />}
           onClick={() => {
             handleUpdateOpen(row)
           }}
@@ -54,7 +54,7 @@ export function specialistColumns({handleUpdateOpen, trigger, mutate}: Props): G
         <GridActionsCellItem
           label="Удалить"
           title="Удалить"
-          icon={<DeleteIcon sx={{fontSize: 24}}/>}
+          icon={<DeleteIcon sx={{ fontSize: 24 }} />}
           onClick={async () => {
             try {
               const response = await trigger(row.id)

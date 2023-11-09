@@ -8,43 +8,42 @@ import toast from 'react-hot-toast'
 import { AxiosError } from 'axios'
 import CustomDialog from '@shared/ui/CustomDialog/CustomDialog'
 import { LoadingButton } from '@mui/lab'
-import { ISpecialistCategory } from 'src/modules/specialistCategory'
 import { useSpecialistStore } from '@modules/specialist/model/specialists/store'
 import { SpecialistFormData, updateSpecialistScheme } from '@modules/specialist/model/specialists/SpecialistFormData'
 import { SpecialistForm } from '@modules/specialist/ui/specialists/SpecialistForm'
 import Box from '@mui/material/Box'
 import Avatar from '@mui/material/Avatar'
 import { deleteFetcher } from '@shared/api/fetcher/deleteFetcher'
+import { updateFetcherJson } from '@shared/api/fetcher/updateFetcherJson'
+import { useLanguageStore } from '@shared/model/store'
 
 interface Props {
   mutate: KeyedMutator<any>
-  specialistCategories: ISpecialistCategory[]
 }
 
-function UpdateSpecialist({mutate, specialistCategories}: Props) {
+function UpdateSpecialist({ mutate }: Props) {
+  const lang = useLanguageStore(({ langList, lang }) => langList.find(({ code }) => code === lang))
+  // console.log(lang)
   const [images, setImages] = useState<File[]>([])
   const [specialist, handleUpdateClose, handleUpdateOpen] = useSpecialistStore(
-    ({handleUpdateClose, update, handleUpdateOpen}) => [update, handleUpdateClose, handleUpdateOpen]
+    ({ handleUpdateClose, update, handleUpdateOpen }) => [update, handleUpdateClose, handleUpdateOpen]
   )
-  const {trigger, isMutating} = useSWRMutation(['/specialists', specialist?.id], updateFetcher)
+  const { trigger, isMutating } = useSWRMutation([`/guide`, specialist?.id], updateFetcher)
   const {
     trigger: triggerDeleteFile,
     isMutating: isDeleteFileMutating,
-  } = useSWRMutation('/specialists', deleteFetcher)
+  } = useSWRMutation('/guide', deleteFetcher)
   const {
     control,
-    formState: {errors},
+    formState: { errors },
     handleSubmit,
     setValue,
   } = useForm<SpecialistFormData>({
     defaultValues: {
+      image: specialist?.image,
       name: specialist?.name,
-      description: specialist?.description,
-      specialist_category_id: specialist?.category.id,
-      specialization: specialist?.specialization,
-      phone: specialist?.phone,
-      instagram: specialist?.instagram,
-      experience: specialist?.experience,
+      lang_id: lang?.id,
+      speciality: specialist?.speciality
     },
     mode: 'onBlur',
     resolver: yupResolver(updateSpecialistScheme)
@@ -52,7 +51,7 @@ function UpdateSpecialist({mutate, specialistCategories}: Props) {
 
   const onSubmit: SubmitHandler<SpecialistFormData> = async (data) => {
     try {
-      const response = await trigger({...data, avatar: images[0]})
+      const response = await trigger({ ...data, image: images[0] })
       await mutate()
       handleUpdateClose()
       toast.success(response.message)
@@ -68,14 +67,14 @@ function UpdateSpecialist({mutate, specialistCategories}: Props) {
       handleClose={handleUpdateClose}
     >
       <form noValidate autoComplete="off" onSubmit={handleSubmit(onSubmit)}>
-        {specialist?.avatar && (
+        {specialist?.image && (
           <Box display="flex" alignItems="center" mb={5}>
             <Avatar
-              src={specialist.avatar}
+              src={specialist.image}
               alt={specialist.name}
-              sx={{mr: 5}}
+              sx={{ mr: 5 }}
             />
-            <LoadingButton
+            {/* <LoadingButton
               variant="contained"
               size="small"
               onClick={async () => {
@@ -86,7 +85,7 @@ function UpdateSpecialist({mutate, specialistCategories}: Props) {
                   toast.success(response.message)
                   handleUpdateOpen({
                     ...specialist,
-                    avatar: null,
+                    // image: null,
                   })
                 } catch (e) {
                   const error = e as AxiosError<{ message: string }>
@@ -96,7 +95,7 @@ function UpdateSpecialist({mutate, specialistCategories}: Props) {
               loading={isDeleteFileMutating}
             >
               Удалить аватарку
-            </LoadingButton>
+            </LoadingButton> */}
           </Box>
         )}
         <SpecialistForm
@@ -105,7 +104,6 @@ function UpdateSpecialist({mutate, specialistCategories}: Props) {
           images={images}
           setImages={setImages}
           setValue={setValue}
-          specialistCategories={specialistCategories}
         />
         <LoadingButton
           loading={isMutating}
@@ -113,7 +111,7 @@ function UpdateSpecialist({mutate, specialistCategories}: Props) {
           type="submit"
           size="large"
           variant="contained"
-          sx={{mt: 5}}
+          sx={{ mt: 5 }}
         >
           Отправить
         </LoadingButton>

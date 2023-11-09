@@ -13,19 +13,20 @@ type Action = {
   handleUpdateClose(): void
 }
 
-export const useSpecialistStore = create<State & Action>((set) => ({
+export const useSpecialistStore = create<State & Action>(set => ({
   open: false,
   update: null,
   handleCreateOpen() {
-    set(() => ({open: true}))
+    set(() => ({ open: true }))
   },
   handleCreateClose() {
-    set(() => ({open: false}))
+    set(() => ({ open: false }))
   },
   handleUpdateOpen(data) {
-    set(() => ({update: data}))
+    console.log('open')
+    set(() => ({ update: data }))
   },
   handleUpdateClose() {
-    set(() => ({update: null}))
-  },
+    set(() => ({ update: null }))
+  }
 }))

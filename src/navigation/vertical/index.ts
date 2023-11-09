@@ -47,17 +47,7 @@ const navigation = (): VerticalNavItemsType => {
     {
       title: 'Специалисты',
       path: '/main/specialists',
-      icon: 'iconoir:community',
-      children: [
-        {
-          title: 'Все специалисты',
-          path: '/main/specialists'
-        },
-        {
-          title: 'Категории',
-          path: '/main/specialists/categories'
-        }
-      ]
+      icon: 'iconoir:community'
     },
     {
       title: 'Услуги',

@@ -10,31 +10,36 @@ import { LoadingButton } from '@mui/lab'
 import { useSpecialistStore } from '@modules/specialist/model/specialists/store'
 import { createSpecialistScheme, SpecialistFormData } from '@modules/specialist/model/specialists/SpecialistFormData'
 import { SpecialistForm } from '@modules/specialist/ui/specialists/SpecialistForm'
-import { ISpecialistCategory } from 'src/modules/specialistCategory'
 import { KeyedMutator } from 'swr'
+import { useLanguageStore } from '@shared/model/store'
 
 interface Props {
-  specialistCategories: ISpecialistCategory[]
+  // specialistCategories: ISpecialistCategory[]
   mutate: KeyedMutator<any>
 }
 
-function CreateSpecialist({specialistCategories, mutate}: Props) {
+function CreateSpecialist({ mutate }: Props) {
+  const lang = useLanguageStore(({ langList, lang }) => langList.find(({ code }) => code === lang))
+
   const [images, setImages] = useState<File[]>([])
-  const {trigger, isMutating} = useSWRMutation('/specialists', postFetcher)
-  const [handleCreateClose] = useSpecialistStore(({handleCreateClose}) => [handleCreateClose])
+  const { trigger, isMutating } = useSWRMutation('/guide/', postFetcher)
+  const [handleCreateClose] = useSpecialistStore(({ handleCreateClose }) => [handleCreateClose])
   const {
     control,
-    formState: {errors},
+    formState: { errors },
     handleSubmit,
     setValue,
   } = useForm<SpecialistFormData>({
+    defaultValues: {
+      lang_id: lang?.id,
+    },
     mode: 'onBlur',
     resolver: yupResolver(createSpecialistScheme)
   })
 
   const onSubmit: SubmitHandler<SpecialistFormData> = async (data) => {
     try {
-      const response = await trigger({...data, avatar: images[0]})
+      const response = await trigger({ ...data, image: images[0] })
       await mutate()
       handleCreateClose()
       toast.success(response.message)
@@ -56,7 +61,6 @@ function CreateSpecialist({specialistCategories, mutate}: Props) {
           images={images}
           setImages={setImages}
           setValue={setValue}
-          specialistCategories={specialistCategories}
         />
         <LoadingButton
           loading={isMutating}
@@ -64,7 +68,7 @@ function CreateSpecialist({specialistCategories, mutate}: Props) {
           type="submit"
           size="large"
           variant="contained"
-          sx={{mt: 5}}
+          sx={{ mt: 5 }}
         >
           Отправить
         </LoadingButton>

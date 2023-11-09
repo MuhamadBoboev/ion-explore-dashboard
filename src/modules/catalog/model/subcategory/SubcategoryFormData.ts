@@ -6,10 +6,12 @@ import { getMaxNumberErrorMessage } from '@shared/lib/getMaxNumberErrorMessage'
 
 export interface SubcategoryFormData {
   name: string
+  category_id: number
 }
 
 const yupObject = {
-  name: yup.string().max(255, getMaxLengthErrorMessage()).required('Введите название подкатегории')
+  name: yup.string().max(255, getMaxLengthErrorMessage()).required('Введите название подкатегории'),
+  category_id: yup.number().required('Введите название подкатегории')
 }
 
 type FormType = yup.ObjectSchema<SubcategoryFormData, yup.AnyObject>
