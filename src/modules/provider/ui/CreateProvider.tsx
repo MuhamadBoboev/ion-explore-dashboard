@@ -10,20 +10,22 @@ import { LoadingButton } from '@mui/lab'
 import { useProviderStore } from '@modules/provider/model/store'
 import { createProviderScheme, ProviderFormData } from '@modules/provider/model/ProviderFormData'
 import { ProviderForm } from '@modules/provider/ui/ProviderForm'
-import { ICategory } from '@modules/catalog'
+import { ICategory, ISubcategory } from '@modules/catalog'
+import { useLanguageStore } from '@shared/model/store'
 
 interface Props {
-  categories: ICategory[]
+  categories: ISubcategory[]
 }
 
-function CreateProvider({categories}: Props) {
+function CreateProvider({ categories }: Props) {
   const [images, setImages] = useState<File[]>([])
-  const [files, setFiles] = useState<File[]>([])
-  const {trigger, isMutating} = useSWRMutation('/providers', postFetcher)
-  const [handleCreateClose] = useProviderStore(({handleCreateClose}) => [handleCreateClose])
+  // const [files, setFiles] = useState<File[]>([])
+  const { trigger, isMutating } = useSWRMutation('/tour/', postFetcher)
+  const lang = useLanguageStore(({ langList, lang }) => langList.find((el) => el.code === lang))
+  const [handleCreateClose] = useProviderStore(({ handleCreateClose }) => [handleCreateClose])
   const {
     control,
-    formState: {errors},
+    formState: { errors },
     handleSubmit,
     setError,
     setValue,
@@ -32,20 +34,19 @@ function CreateProvider({categories}: Props) {
   } = useForm<ProviderFormData>({
     mode: 'onBlur',
     defaultValues: {
-      category_ids: [],
-      subcategory_ids: []
+      // lang_id: lang?.code
     },
     resolver: yupResolver(createProviderScheme)
   })
 
   const onSubmit: SubmitHandler<ProviderFormData> = async (data) => {
     if (images.length === 0) {
-      setError('logo', {
+      setError('image', {
         message: 'Выберите логотип поставщика'
       })
     }
     try {
-      const response = await trigger({...data, logo: images[0], file: files[0]})
+      const response = await trigger({ ...data, logo: images[0] })
       handleCreateClose()
       toast.success(response.message)
     } catch (e) {
@@ -65,8 +66,8 @@ function CreateProvider({categories}: Props) {
           control={control}
           images={images}
           setImages={setImages}
-          files={files}
-          setFiles={setFiles}
+          // files={files}
+          // setFiles={setFiles}
           setValue={setValue}
           categories={categories}
           getValues={getValues}
@@ -78,7 +79,7 @@ function CreateProvider({categories}: Props) {
           type="submit"
           size="large"
           variant="contained"
-          sx={{mt: 5}}
+          sx={{ mt: 5 }}
         >
           Отправить
         </LoadingButton>

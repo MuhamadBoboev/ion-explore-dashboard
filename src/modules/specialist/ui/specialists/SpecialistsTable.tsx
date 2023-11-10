@@ -5,9 +5,7 @@ import { LinearProgress } from '@mui/material'
 import { ISpecialist } from '@modules/specialist/model/specialists/ISpecialist'
 import { useSpecialistStore } from '@modules/specialist/model/specialists/store'
 import { specialistColumns } from '@modules/specialist/model/specialists/specialistColumns'
-import { Dispatch, SetStateAction } from 'react'
 import { KeyedMutator } from 'swr'
-import { PaginationModelType } from '@shared/lib/PaginationModelType'
 
 interface Props {
   loading: boolean
@@ -19,7 +17,6 @@ function SpecialistsTable({ specialists, loading, mutate }: Props) {
   const { trigger } = useSWRMutation('/guide', deleteFetcher)
   const [handleUpdateOpen] = useSpecialistStore(({ handleUpdateOpen }) => [handleUpdateOpen])
 
-  console.log(specialists)
   return (
     <DataGrid
       slots={{ loadingOverlay: LinearProgress }}

@@ -7,21 +7,26 @@ import { useProviderStore } from '@modules/provider/model/store'
 import { IProvider } from '@modules/provider'
 import { ProvidersTable } from '@modules/provider/ui/ProvidersTable'
 import { ProviderModals } from '@modules/provider/ui/ProviderModals'
+import { Subcategories } from '@modules/catalog/ui/subcategory/Subcategories';
+import { ISubcategory } from '@modules/catalog'
+import { useLanguageStore } from '@shared/model/store'
 
 function Providers() {
-  const [handleCreateOpen] = useProviderStore(({handleCreateOpen}) => [handleCreateOpen])
+  const [handleCreateOpen] = useProviderStore(({ handleCreateOpen }) => [handleCreateOpen])
+  const lang = useLanguageStore(({ langList, lang }) => langList.find((el) => el.code === lang))
+
   const {
     data: providers,
     isValidating,
     isLoading,
     error,
     mutate,
-  } = useSWR<{ data: IProvider[] }>('/providers', getFetcher)
+  } = useSWR<IProvider[]>(`/tour/?lang=${lang?.code}`, getFetcher)
+
 
   if (error) {
-    return <Error500/>
+    return <Error500 />
   }
-
   return (
     <CustomCard>
       <ProviderModals
@@ -35,7 +40,7 @@ function Providers() {
       <ProvidersTable
         mutate={mutate}
         loading={isLoading || isValidating}
-        providers={providers?.data || []}
+        providers={providers || []}
       />
     </CustomCard>
   )

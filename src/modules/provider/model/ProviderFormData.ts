@@ -1,28 +1,21 @@
 import * as yup from 'yup'
 import { getMaxLengthErrorMessage } from '@shared/lib/getMaxLengthErrorMessage'
+import { ISubcategory } from '@modules/catalog'
 
 export interface ProviderFormData {
-  name: string
   description?: string | null
-  logo?: string | null
-  file?: string | null
-  category_ids?: number[] | null
-  subcategory_ids?: number[] | null
+  image?: string | null
+  lang_id?: number
+  name?: string
+  subcategory_id: number
 }
 
 const yupObject = {
-  name: yup.string()
-    .required('Введите название поставщика')
-    .max(255, getMaxLengthErrorMessage()),
+  name: yup.string().required('Введите название поставщика').max(255, getMaxLengthErrorMessage()),
   description: yup.string().nullable(),
-  logo: yup.string().required('Выберите логотип поставщика'),
-  file: yup.string().nullable(),
-  category_ids: yup.array()
-    .of(yup.number().required())
-    .nullable(),
-  subcategory_ids: yup.array()
-    .of(yup.number().required())
-    .nullable(),
+  lang_id: yup.number().required('Введите язык'),
+  image: yup.string().nullable(),
+  subcategory_id: yup.number().required()
 }
 
 type FormType = yup.ObjectSchema<ProviderFormData, yup.AnyObject>

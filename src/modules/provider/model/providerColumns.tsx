@@ -9,43 +9,42 @@ import { KeyedMutator } from 'swr'
 
 interface Props {
   mutate: KeyedMutator<any>
-
   handleUpdateOpen(data: IProvider): void
-
   trigger(id: number): Promise<any>
 }
 
-export function providerColumns({mutate, handleUpdateOpen, trigger}: Props): GridColDef<IProvider>[] {
+export function providerColumns({ mutate, handleUpdateOpen, trigger }: Props): GridColDef<IProvider>[] {
   return [
-    {field: 'id', headerName: '#', width: 80},
+    { field: 'id', headerName: '#', width: 80 },
     {
-      field: 'logo',
+      field: 'image',
       headerName: 'Лого',
       width: 100,
-      renderCell: ({row: {name, logo}}) => (
+      renderCell: ({ row: { name, image } }) => (
         <Avatar
-          src={logo}
+          src={image}
           alt={name}
         />
       )
     },
-    {field: 'name', headerName: 'Название', flex: 1},
-    {field: 'description', headerName: 'Описание', flex: 1},
-    {
-      field: 'file',
-      headerName: 'Файл',
-      renderCell: ({row: {file}}) => file ? 'Файл прикреплен' : 'Отсутствует',
-      flex: 1,
-    },
+    { field: 'name', headerName: 'Название', flex: 1 },
+    { field: 'description', headerName: 'Описание', flex: 1 },
+    { field: 'subcategory_id', headerName: 'Категория', flex: 1 },
+    // {
+    //   field: 'file',
+    //   headerName: 'Файл',
+    //   renderCell: ({ row: { file } }) => file ? 'Файл прикреплен' : 'Отсутствует',
+    //   flex: 1,
+    // },
     {
       field: 'actions',
       type: 'actions',
       width: 80,
-      getActions: ({row}) => [
+      getActions: ({ row }) => [
         <GridActionsCellItem
           title="Изменить"
           label="Изменить"
-          icon={<EditIcon sx={{fontSize: 24}}/>}
+          icon={<EditIcon sx={{ fontSize: 24 }} />}
           onClick={() => {
             handleUpdateOpen(row)
           }}
@@ -53,7 +52,7 @@ export function providerColumns({mutate, handleUpdateOpen, trigger}: Props): Gri
         <GridActionsCellItem
           label="Удалить"
           title="Удалить"
-          icon={<DeleteIcon sx={{fontSize: 24}}/>}
+          icon={<DeleteIcon sx={{ fontSize: 24 }} />}
           onClick={async () => {
             try {
               const response = await trigger(row.id)

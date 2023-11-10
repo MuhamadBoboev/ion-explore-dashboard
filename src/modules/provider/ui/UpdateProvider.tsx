@@ -11,30 +11,33 @@ import { LoadingButton } from '@mui/lab'
 import { useProviderStore } from '@modules/provider/model/store'
 import { ProviderFormData, updateProviderScheme } from '@modules/provider/model/ProviderFormData'
 import { ProviderForm } from '@modules/provider/ui/ProviderForm'
-import { ICategory } from '@modules/catalog'
+import { ICategory, ISubcategory } from '@modules/catalog'
 import Box from '@mui/material/Box'
 import Link from 'next/link'
 import { deleteFetcher } from '@shared/api/fetcher/deleteFetcher'
+import { useLanguageStore } from '@shared/model/store'
 
 interface Props {
   mutate: KeyedMutator<any>
-  categories: ICategory[]
+  categories: ISubcategory[]
 }
 
-function UpdateProvider({categories, mutate}: Props) {
+function UpdateProvider({ categories, mutate }: Props) {
   const [images, setImages] = useState<File[]>([])
   const [files, setFiles] = useState<File[]>([])
+  const { langList, lang } = useLanguageStore(({ langList, lang }) => ({ langList, lang }))
+  // langList.find((el) => el.code === lang)
   const [provider, handleUpdateClose, handleUpdateOpen] = useProviderStore(
-    ({handleUpdateClose, update, handleUpdateOpen}) => [update, handleUpdateClose, handleUpdateOpen]
+    ({ handleUpdateClose, update, handleUpdateOpen }) => [update, handleUpdateClose, handleUpdateOpen]
   )
-  const {trigger, isMutating} = useSWRMutation(['/providers', provider?.id], updateFetcher)
+  const { trigger, isMutating } = useSWRMutation(['/tour', provider?.id], updateFetcher)
   const {
     trigger: triggerDeleteFile,
     isMutating: isDeleteFileMutating,
-  } = useSWRMutation('/providers', deleteFetcher)
+  } = useSWRMutation('/tour', deleteFetcher)
   const {
     control,
-    formState: {errors},
+    formState: { errors },
     handleSubmit,
     setValue,
     getValues,
@@ -43,16 +46,15 @@ function UpdateProvider({categories, mutate}: Props) {
     defaultValues: {
       name: provider?.name,
       description: provider?.description,
-      category_ids: provider?.categories.map(({id}) => id) || [],
-      subcategory_ids: provider?.subcategories.map(({id}) => id) || [],
+      subcategory_id: categories.find(({ name }) => name === provider?.subcategory_id)?.id,
+      lang_id: langList.find((el) => el.name === provider?.lang_id)?.id
     },
     mode: 'onBlur',
     resolver: yupResolver(updateProviderScheme)
   })
-
   const onSubmit: SubmitHandler<ProviderFormData> = async (data) => {
     try {
-      const response = await trigger({...data, logo: images[0], file: files[0]})
+      const response = await trigger({ ...data, logo: images[0] })
       await mutate()
       handleUpdateClose()
       toast.success(response.message)
@@ -62,6 +64,7 @@ function UpdateProvider({categories, mutate}: Props) {
     }
   }
 
+  console.log(control._names)
   return (
     <CustomDialog
       title="Изменить"
@@ -73,14 +76,14 @@ function UpdateProvider({categories, mutate}: Props) {
           control={control}
           images={images}
           setImages={setImages}
-          files={files}
-          setFiles={setFiles}
+          // files={files}
+          // setFiles={setFiles}
           setValue={setValue}
           categories={categories}
           getValues={getValues}
           watch={watch}
         />
-        {provider?.file && (
+        {/* {provider?.file && (
           <>
             <Box display="flex">
               <span
@@ -104,7 +107,7 @@ function UpdateProvider({categories, mutate}: Props) {
             </Box>
             <LoadingButton
               variant="contained"
-              sx={{mt: 4}}
+              sx={{ mt: 4 }}
               onClick={async () => {
                 try {
                   // @ts-ignore
@@ -124,14 +127,14 @@ function UpdateProvider({categories, mutate}: Props) {
               Удалить файл
             </LoadingButton>
           </>
-        )}
+        )} */}
         <LoadingButton
           loading={isMutating}
           fullWidth
           type="submit"
           size="large"
           variant="contained"
-          sx={{mt: 5}}
+          sx={{ mt: 5 }}
         >
           Отправить
         </LoadingButton>

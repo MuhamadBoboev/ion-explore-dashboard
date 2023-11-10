@@ -13,23 +13,23 @@ interface CustomPageHeaderProps {
 }
 
 function MainBannersHeader({
-                             buttonName,
-                             title,
-                             rightContent,
-                             leftContent,
-                             withButton = true,
-                             handleOpen,
-                           }: CustomPageHeaderProps) {
+  buttonName,
+  title,
+  rightContent,
+  leftContent,
+  withButton = true,
+  handleOpen,
+}: CustomPageHeaderProps) {
   return (
     <Grid container alignItems="center" justifyContent="space-between">
       <Grid item>
-        <CardHeader title={title}/>
+        <CardHeader title={title} />
         {leftContent}
       </Grid>
       <Grid item>
         {withButton && <Button
           variant="contained"
-          sx={{marginRight: 5}}
+          sx={{ marginRight: 5 }}
           onClick={handleOpen}
         >
           {buttonName || 'Добавить'}

@@ -7,7 +7,6 @@ import { useSpecialistStore } from '@modules/specialist/model/specialists/store'
 import { ISpecialist, ISpecialistData } from '@modules/specialist/model/specialists/ISpecialist'
 import { SpecialistModals } from '@modules/specialist/ui/specialists/SpecialistModals'
 import { SpecialistsTable } from '@modules/specialist/ui/specialists/SpecialistsTable'
-import { useState } from 'react'
 import { useLanguageStore } from '@shared/model/store'
 
 function Specialists() {
@@ -24,7 +23,6 @@ function Specialists() {
   if (error) {
     return <Error500 />
   }
-  // console.log(specialists)
 
   return (
     <CustomCard>

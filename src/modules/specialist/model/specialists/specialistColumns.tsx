@@ -30,7 +30,7 @@ export function specialistColumns({ handleUpdateOpen, trigger, mutate }: Props):
       )
     },
     { field: 'name', headerName: 'Имя', flex: 1 },
-    { field: 'description', headerName: 'Специальность', flex: 1 },
+    { field: 'speciality', headerName: 'Специальность', flex: 1 },
     {
       field: 'actions',
       type: 'actions',

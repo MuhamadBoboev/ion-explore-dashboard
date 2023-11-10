@@ -14,7 +14,6 @@ import { SpecialistForm } from '@modules/specialist/ui/specialists/SpecialistFor
 import Box from '@mui/material/Box'
 import Avatar from '@mui/material/Avatar'
 import { deleteFetcher } from '@shared/api/fetcher/deleteFetcher'
-import { updateFetcherJson } from '@shared/api/fetcher/updateFetcherJson'
 import { useLanguageStore } from '@shared/model/store'
 
 interface Props {
@@ -30,8 +29,6 @@ function UpdateSpecialist({ mutate }: Props) {
   )
   const { trigger, isMutating } = useSWRMutation([`/guide`, specialist?.id], updateFetcher)
   const {
-    trigger: triggerDeleteFile,
-    isMutating: isDeleteFileMutating,
   } = useSWRMutation('/guide', deleteFetcher)
   const {
     control,
@@ -74,28 +71,6 @@ function UpdateSpecialist({ mutate }: Props) {
               alt={specialist.name}
               sx={{ mr: 5 }}
             />
-            {/* <LoadingButton
-              variant="contained"
-              size="small"
-              onClick={async () => {
-                try {
-                  // @ts-ignore
-                  const response: { message: string } = await triggerDeleteFile(`${specialist.id}/avatar`)
-                  await mutate()
-                  toast.success(response.message)
-                  handleUpdateOpen({
-                    ...specialist,
-                    // image: null,
-                  })
-                } catch (e) {
-                  const error = e as AxiosError<{ message: string }>
-                  toast.error(error?.message || 'Произошла ошибка')
-                }
-              }}
-              loading={isDeleteFileMutating}
-            >
-              Удалить аватарку
-            </LoadingButton> */}
           </Box>
         )}
         <SpecialistForm

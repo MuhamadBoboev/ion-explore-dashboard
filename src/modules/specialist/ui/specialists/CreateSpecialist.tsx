@@ -14,7 +14,6 @@ import { KeyedMutator } from 'swr'
 import { useLanguageStore } from '@shared/model/store'
 
 interface Props {
-  // specialistCategories: ISpecialistCategory[]
   mutate: KeyedMutator<any>
 }
 

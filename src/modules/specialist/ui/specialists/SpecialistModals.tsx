@@ -17,12 +17,10 @@ function SpecialistModals({ mutate }: Props) {
   return (
     <>
       {open && <CreateSpecialist
-        // specialistCategories={specialistCategories.data}
         mutate={mutate}
       />}
       {update && <UpdateSpecialist
         mutate={mutate}
-      // specialistCategories={specialistCategories.data}
       />}
     </>
   )

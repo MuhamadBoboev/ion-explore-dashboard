@@ -8,54 +8,42 @@ import ModalFormControl from '@shared/ui/ModalFormControl'
 import InputLabel from '@mui/material/InputLabel'
 import { Select } from '@mui/material'
 import MenuItem from '@mui/material/MenuItem'
+import { LangForm } from '@shared/ui/LangForm'
 
 interface Props {
   errors: FieldErrors<ProviderFormData>
   control: Control<ProviderFormData>
   images: File[]
   setImages: Dispatch<SetStateAction<File[]>>
-  files: File[]
-  setFiles: Dispatch<SetStateAction<File[]>>
+  // files: File[]
+  // setFiles: Dispatch<SetStateAction<File[]>>
   setValue: UseFormSetValue<ProviderFormData>
-  categories: ICategory[]
+  categories: ISubcategory[]
   getValues: UseFormGetValues<ProviderFormData>
   watch: UseFormWatch<ProviderFormData>
 }
 
 function ProviderForm({
-                        categories,
-                        control,
-                        errors,
-                        images,
-                        setImages,
-                        files,
-                        setFiles,
-                        setValue,
-                        getValues,
-                        watch
-                      }: Props) {
-  const [subcategories, setSubcategories] = useState<ISubcategory[]>([])
+  categories,
+  control,
+  errors,
+  images,
+  setImages,
+  // files,
+  // setFiles,
+  setValue,
+  getValues,
+  watch
+}: Props) {
 
-  useEffect(() => {
-    const selectedCategoryIds = getValues('category_ids')
-    const selectedSubcategoryIds = getValues('subcategory_ids')
-    const selectedCategories = categories.filter(category => selectedCategoryIds?.includes(category.id))
-    let subcategories: ISubcategory[] = []
-    selectedCategories.forEach((category) => {
-      subcategories.push(...category.subcategories)
-    })
-    setSubcategories(subcategories)
-    const selectedSubcategories = subcategories.filter(subcategory => selectedSubcategoryIds?.includes(subcategory.id))
-    setValue('subcategory_ids', selectedSubcategories.map(({id}) => id))
-  }, [watch('category_ids')])
-
+  console.log(control)
   return (
     <>
       <FileUploader
         title="Выберите логотип"
         files={images}
         setFiles={setImages}
-        errorMessage={errors.logo?.message}
+        errorMessage={errors.image?.message}
         control={control}
         setValue={setValue}
         name="logo"
@@ -77,54 +65,54 @@ function ProviderForm({
           rows: 4,
         })}
       />
-      <ModalFormControl errorMessage={errors.category_ids?.message}>
-        <InputLabel id="select-category_ids">Категории</InputLabel>
+      <LangForm errorMessage={errors.lang_id?.message} control={control} />
+      {/* <ModalFormControl errorMessage={errors.category_ids?.message}>
+        <InputLabel id="subcategory_id">Категории</InputLabel>
         <Controller
           name="category_ids"
           control={control}
-          render={({field}) => (
+          render={({ field }) => (
             <Select
-              labelId="select-category_ids-label"
-              id="select-category_ids"
+              labelId="subcategory_id-label"
+              id="subcategory_id"
               label="Категории"
               {...field}
               required={true}
               multiple
             >
-              {categories.map(({id, name}) => (
+              {categories.map(({ id, name }) => (
                 <MenuItem key={id} value={id}>{name}</MenuItem>
               ))}
             </Select>
           )}
         />
-      </ModalFormControl>
-      <ModalFormControl errorMessage={errors.subcategory_ids?.message}>
-        <InputLabel id="select-subcategory_ids">Подкатегории</InputLabel>
+      </ModalFormControl> */}
+      <ModalFormControl errorMessage={errors.subcategory_id?.message}>
+        <InputLabel id="subcategory_id">Подкатегории</InputLabel>
         <Controller
-          name="subcategory_ids"
+          name="subcategory_id"
           control={control}
-          render={({field}) => (
+          render={({ field }) => (
             <Select
               labelId="select-subcategory_ids-label"
-              id="select-subcategory_ids"
+              id="subcategory_id"
               label="Подкатегории"
               {...field}
               required={true}
-              multiple
               onChange={(event) => {
                 if (field.onChange) {
                   field.onChange(event)
                 }
               }}
             >
-              {subcategories.map(({id, name}) => (
+              {categories.map(({ id, name }) => (
                 <MenuItem key={id} value={id}>{name}</MenuItem>
               ))}
             </Select>
           )}
         />
       </ModalFormControl>
-      <FileUploader
+      {/* <FileUploader
         title="Прикрепить файл (Необязательно)"
         files={files}
         setFiles={setFiles}
@@ -138,7 +126,7 @@ function ProviderForm({
         }}
         maxFileSize={100}
         acceptFilesText="*.jpg, *.jpeg, *.png, *.pdf, *.doc, *.docx, *.xls, *.xlsx, *.ppt, *.pptx, *.zip, *.rar"
-      />
+      /> */}
     </>
   )
 }

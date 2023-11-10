@@ -13,16 +13,16 @@ interface Props {
   providers: IProvider[]
 }
 
-function ProvidersTable({mutate, providers, loading}: Props) {
-  const {trigger} = useSWRMutation('/providers', deleteFetcher)
-  const [handleUpdateOpen] = useProviderStore(({handleUpdateOpen}) => [handleUpdateOpen])
+function ProvidersTable({ mutate, providers, loading }: Props) {
+  const { trigger } = useSWRMutation('/tour', deleteFetcher)
+  const [handleUpdateOpen] = useProviderStore(({ handleUpdateOpen }) => [handleUpdateOpen])
 
   return (
     <DataGrid
-      slots={{loadingOverlay: LinearProgress}}
+      slots={{ loadingOverlay: LinearProgress }}
       hideFooter
       loading={loading}
-      columns={providerColumns({mutate, handleUpdateOpen, trigger})}
+      columns={providerColumns({ mutate, handleUpdateOpen, trigger })}
       rows={providers}
       rowSelection={false}
       autoHeight

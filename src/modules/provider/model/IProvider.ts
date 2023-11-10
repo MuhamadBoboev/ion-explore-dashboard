@@ -1,12 +1,10 @@
 import { ICategory, ISubcategory } from '@modules/catalog'
 
 export interface IProvider {
+  description: string
   id: number
+  image: string
+  lang_id: string
   name: string
-  logo: string
-  slug: string
-  description: string | null
-  categories: ICategory[]
-  subcategories: ISubcategory[]
-  file: string | null
+  subcategory_id: string
 }
