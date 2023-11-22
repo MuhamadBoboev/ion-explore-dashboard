@@ -4,39 +4,49 @@ import EditIcon from '@mui/icons-material/Edit'
 import DeleteIcon from '@mui/icons-material/Delete'
 import toast from 'react-hot-toast'
 import { AxiosError } from 'axios'
-import { ISubcategory } from '@modules/catalog'
 import { KeyedMutator } from 'swr'
+import { IEntertainment } from './IEntertainment'
 
 interface Props {
   mutate: KeyedMutator<any>
-
-  handleUpdateOpen(data: ISubcategory): void
-
+  handleUpdateOpen(data: IEntertainment): void
   trigger(id: number): Promise<any>
 }
 
-export function subcategoryColumns({ handleUpdateOpen, trigger, mutate }: Props): GridColDef<ISubcategory>[] {
-  // console.log()
+export function entertainmentColumns({ mutate, handleUpdateOpen, trigger }: Props): GridColDef<IEntertainment>[] {
   return [
     { field: 'id', headerName: '#', width: 80 },
     {
-      field: 'icon',
-      headerName: 'Иконка',
+      field: 'image',
+      headerName: 'Лого',
       width: 100,
-      renderCell: ({ row: { name, icon } }) => (
+      renderCell: ({ row: { title, image } }) => (
         <Avatar
-          src={icon}
-          alt={name}
+          src={image}
+          alt={title}
         />
       )
     },
-    { field: 'name', headerName: 'Название', flex: 1 },
-    // {field: 'description', headerName: 'Описание', flex: 1},
-    // {field: 'order', headerName: 'Порядок', width: 100},
+    { field: 'title', headerName: 'Название', flex: 1 },
+    { field: 'description', headerName: 'Описание', flex: 1 },
+    {
+      field: 'subcategory',
+      headerName: 'Категория',
+      renderCell: ({ row: { subcategory } }) => (
+        subcategory.name
+      ),
+      flex: 1
+    },
+    // {
+    //   field: 'file',
+    //   headerName: 'Файл',
+    //   renderCell: ({ row: { file } }) => file ? 'Файл прикреплен' : 'Отсутствует',
+    //   flex: 1,
+    // },
     {
       field: 'actions',
       type: 'actions',
-      width: 90,
+      width: 80,
       getActions: ({ row }) => [
         <GridActionsCellItem
           title="Изменить"
@@ -53,8 +63,8 @@ export function subcategoryColumns({ handleUpdateOpen, trigger, mutate }: Props)
           onClick={async () => {
             try {
               const response = await trigger(row.id)
-              toast.success(response.message)
               await mutate()
+              toast.success(response.message)
             } catch (e) {
               const error = e as AxiosError<{ message: string }>
               toast.error(error.response?.data.message || 'Произошла ошибка')

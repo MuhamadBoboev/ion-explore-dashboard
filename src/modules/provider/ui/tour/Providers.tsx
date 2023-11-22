@@ -1,12 +1,12 @@
 import useSWR from 'swr'
-import Error500 from '../../../pages/500'
+import Error500 from '../../../../pages/500'
 import CustomCard from '@shared/ui/CustomCard'
 import CustomPageHeader from '@shared/ui/CustomPageHeader'
 import { getFetcher } from '@shared/api/fetcher/getFetcher'
 import { useProviderStore } from '@modules/provider/model/store'
-import { IProvider } from '@modules/provider'
-import { ProvidersTable } from '@modules/provider/ui/ProvidersTable'
-import { ProviderModals } from '@modules/provider/ui/ProviderModals'
+import { ITour } from '@modules/provider'
+import { ProvidersTable } from '@modules/provider/ui/tour/ProvidersTable'
+import { ProviderModals } from '@modules/provider/ui/tour/ProviderModals'
 import { Subcategories } from '@modules/catalog/ui/subcategory/Subcategories';
 import { ISubcategory } from '@modules/catalog'
 import { useLanguageStore } from '@shared/model/store'
@@ -21,7 +21,7 @@ function Providers() {
     isLoading,
     error,
     mutate,
-  } = useSWR<IProvider[]>(`/tour/?lang=${lang?.code}`, getFetcher)
+  } = useSWR<ITour[]>(`/tour/?lang=${lang?.code}`, getFetcher)
 
 
   if (error) {
@@ -36,6 +36,7 @@ function Providers() {
         handleOpen={handleCreateOpen}
         title="Поставщики"
         buttonName="Создать"
+      // leftContent={<h1>Header left</h1>}
       />
       <ProvidersTable
         mutate={mutate}

@@ -5,6 +5,7 @@ export interface IService {
   id: number
   name: string
   lang_id: number
+  icon: string
 }
 
 // export interface IServiceData extends IPagination {

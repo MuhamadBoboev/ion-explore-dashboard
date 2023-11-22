@@ -2,28 +2,29 @@ import { Control, Controller, FieldErrors, UseFormGetValues, UseFormSetValue, Us
 import { Dispatch, SetStateAction, useEffect, useState } from 'react'
 import TextFieldCustom from '@shared/ui/TextFieldCustom'
 import { FileUploader } from '@shared/ui/FileUploader'
-import { ProviderFormData } from '@modules/provider/model/ProviderFormData'
+// import { EntertainmentFormData } from '@modules/Entertainment/model/EntertainmentFormData'
 import { ICategory, ISubcategory } from '@modules/catalog'
 import ModalFormControl from '@shared/ui/ModalFormControl'
 import InputLabel from '@mui/material/InputLabel'
 import { Select } from '@mui/material'
 import MenuItem from '@mui/material/MenuItem'
 import { LangForm } from '@shared/ui/LangForm'
+import { EntertainmentFormData } from '@modules/entertainment/model/EntertainmentFormData'
 
 interface Props {
-  errors: FieldErrors<ProviderFormData>
-  control: Control<ProviderFormData>
+  errors: FieldErrors<EntertainmentFormData>
+  control: Control<EntertainmentFormData>
   images: File[]
   setImages: Dispatch<SetStateAction<File[]>>
   // files: File[]
   // setFiles: Dispatch<SetStateAction<File[]>>
-  setValue: UseFormSetValue<ProviderFormData>
+  setValue: UseFormSetValue<EntertainmentFormData>
   categories: ISubcategory[]
-  getValues: UseFormGetValues<ProviderFormData>
-  watch: UseFormWatch<ProviderFormData>
+  getValues: UseFormGetValues<EntertainmentFormData>
+  watch: UseFormWatch<EntertainmentFormData>
 }
 
-function ProviderForm({
+function EntertainmentForm({
   categories,
   control,
   errors,
@@ -35,8 +36,7 @@ function ProviderForm({
   getValues,
   watch
 }: Props) {
-
-  console.log(control)
+  // console.log(control)
   return (
     <>
       <FileUploader
@@ -46,13 +46,13 @@ function ProviderForm({
         errorMessage={errors.image?.message}
         control={control}
         setValue={setValue}
-        name="logo"
+        name="image"
       />
       <TextFieldCustom
-        name="name"
+        name="title"
         control={control}
         label="Название"
-        errorMessage={errors.name?.message}
+        errorMessage={errors.title?.message}
         required
       />
       <TextFieldCustom
@@ -131,4 +131,4 @@ function ProviderForm({
   )
 }
 
-export { ProviderForm }
+export { EntertainmentForm }

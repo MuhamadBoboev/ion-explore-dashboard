@@ -12,6 +12,7 @@ import { SubcategoryFormData, updateSubcategoryScheme } from '@modules/catalog/m
 import { SubcategoryForm } from '@modules/catalog/ui/subcategory/SubcategoryForm'
 import { IService } from '@modules/service'
 import { updateFetcherJson } from '@shared/api/fetcher/updateFetcherJson'
+import { useState } from 'react'
 
 interface Props {
   categoryId: number
@@ -20,15 +21,18 @@ interface Props {
 }
 
 function UpdateSubcategory({ categoryId, mutate, services }: Props) {
-  // const [images, setImages] = useState<File[]>([])
+  const [icons, setIcons] = useState<File[]>([])
+
   const [subcategory, handleUpdateClose] = useSubcategoryStore(
     ({ handleUpdateClose, update }) => [update, handleUpdateClose]
   )
-  const { trigger, isMutating } = useSWRMutation(['/sub-category', subcategory?.id], updateFetcherJson)
+  const { trigger, isMutating } = useSWRMutation(['/sub-category', subcategory?.id], updateFetcher)
   const {
     control,
     formState: { errors },
     handleSubmit,
+    setError,
+    setValue
   } = useForm<SubcategoryFormData>({
     defaultValues: {
       name: subcategory?.name
@@ -38,16 +42,25 @@ function UpdateSubcategory({ categoryId, mutate, services }: Props) {
   })
 
   const onSubmit: SubmitHandler<SubcategoryFormData> = async (data) => {
+    console.log('salom')
+    // if (icons.length === 0) {
+    // alert('salom')
+    // }
     try {
-      const response = await trigger(data)
+      console.log('salom')
+      const response = await trigger({ data, icon: icons[0] })
       await mutate()
       handleUpdateClose()
       toast.success(response.message)
     } catch (e) {
+      console.log('salom')
       const error = e as AxiosError<{ message: string }>
       toast.error(error.response?.data.message || 'Произошла ошибка')
     }
   }
+  // const onSubmit = () => {
+  //   alert('Hello')
+  // }
 
   return (
     <CustomDialog
@@ -59,6 +72,9 @@ function UpdateSubcategory({ categoryId, mutate, services }: Props) {
           errors={errors}
           control={control}
           services={services}
+          setIcons={setIcons}
+          setValue={setValue}
+          icons={icons}
         />
         <LoadingButton
           loading={isMutating}

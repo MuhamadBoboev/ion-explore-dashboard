@@ -21,31 +21,35 @@ interface Props {
 }
 
 function CreateSubcategory({ categoryId, mutate, services }: Props) {
-  // const [images, setImages] = useState<File[]>([])
-  const { trigger, isMutating } = useSWRMutation('/sub-category/', postFetcherJson)
+  const [icons, setIcons] = useState<File[]>([])
+  const { trigger, isMutating } = useSWRMutation('/sub-category/', postFetcher)
   const [handleCreateClose] = useSubcategoryStore(({ handleCreateClose }) => [handleCreateClose])
   const {
     control,
     formState: { errors },
     handleSubmit,
-    // setError,
-    // setValue,
+    setError,
+    setValue,
   } = useForm<SubcategoryFormData>({
     mode: 'onBlur',
     defaultValues: {
-      category_id: categoryId
+      // category_id: categoryId
     },
     resolver: yupResolver(createSubcategoryScheme)
   })
 
   const onSubmit: SubmitHandler<SubcategoryFormData> = async (data) => {
-    // if (images.length === 0) {
-    //   setError('icon', {
-    //     message: 'Пожалуйста выберите иконку'
-    //   })
-    // }
+    // console.log(icons[0])
+    // return
+    if (icons.length === 0) {
+      setError('icon', {
+        message: 'Пожалуйста выберите иконку'
+      })
+      // console.log(icons[0])
+    }
     try {
-      const response = await trigger(data)
+      const response = await trigger({ ...data, icon: icons[0] })
+      // console.log(icons[0])
       await mutate()
       handleCreateClose()
       toast.success(response.message)
@@ -65,6 +69,9 @@ function CreateSubcategory({ categoryId, mutate, services }: Props) {
           errors={errors}
           control={control}
           services={services}
+          setIcons={setIcons}
+          setValue={setValue}
+          icons={icons}
         />
         <LoadingButton
           loading={isMutating}

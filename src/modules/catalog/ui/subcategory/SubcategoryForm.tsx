@@ -1,4 +1,4 @@
-import { Control, Controller, FieldErrors } from 'react-hook-form'
+import { Control, Controller, FieldErrors, UseFormSetValue } from 'react-hook-form'
 import TextFieldCustom from '@shared/ui/TextFieldCustom'
 import { SubcategoryFormData } from '@modules/catalog/model/subcategory/SubcategoryFormData'
 import { IService } from '@modules/service'
@@ -6,29 +6,31 @@ import InputLabel from '@mui/material/InputLabel'
 import { Select } from '@mui/material'
 import MenuItem from '@mui/material/MenuItem'
 import ModalFormControl from '@shared/ui/ModalFormControl'
+import { FileUploader } from '@shared/ui/FileUploader'
+import { Dispatch, SetStateAction } from 'react'
 
 interface Props {
   services: IService[]
   errors: FieldErrors<SubcategoryFormData>
   control: Control<SubcategoryFormData>
-  // images: File[]
-  // setImages: Dispatch<SetStateAction<File[]>>
-  // setValue: UseFormSetValue<SubcategoryFormData>
+  icons: File[]
+  setIcons: Dispatch<SetStateAction<File[]>>
+  setValue: UseFormSetValue<SubcategoryFormData>
 }
 
-function SubcategoryForm({ control, errors, services }: Props) {
+function SubcategoryForm({ control, errors, services, setIcons, setValue, icons }: Props) {
 
   return (
     <>
-      {/*<FileUploader*/}
-      {/*  title="Выберите иконку"*/}
-      {/*  files={images}*/}
-      {/*  setFiles={setImages}*/}
-      {/*  errorMessage={errors.icon?.message}*/}
-      {/*  control={control}*/}
-      {/*  setValue={setValue}*/}
-      {/*  name="icon"*/}
-      {/*/>*/}
+      <FileUploader
+        title="Выберите иконку"
+        files={icons}
+        setFiles={setIcons}
+        errorMessage={errors.icon?.message}
+        control={control}
+        setValue={setValue}
+        name="icon"
+      />
       <TextFieldCustom
         name="name"
         control={control}

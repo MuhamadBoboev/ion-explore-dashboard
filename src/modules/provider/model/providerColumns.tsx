@@ -4,16 +4,16 @@ import EditIcon from '@mui/icons-material/Edit'
 import DeleteIcon from '@mui/icons-material/Delete'
 import toast from 'react-hot-toast'
 import { AxiosError } from 'axios'
-import { IProvider } from '@modules/provider'
+import { ITour } from '@modules/provider'
 import { KeyedMutator } from 'swr'
 
 interface Props {
   mutate: KeyedMutator<any>
-  handleUpdateOpen(data: IProvider): void
+  handleUpdateOpen(data: ITour): void
   trigger(id: number): Promise<any>
 }
 
-export function providerColumns({ mutate, handleUpdateOpen, trigger }: Props): GridColDef<IProvider>[] {
+export function providerColumns({ mutate, handleUpdateOpen, trigger }: Props): GridColDef<ITour>[] {
   return [
     { field: 'id', headerName: '#', width: 80 },
     {
@@ -29,7 +29,14 @@ export function providerColumns({ mutate, handleUpdateOpen, trigger }: Props): G
     },
     { field: 'name', headerName: 'Название', flex: 1 },
     { field: 'description', headerName: 'Описание', flex: 1 },
-    { field: 'subcategory_id', headerName: 'Категория', flex: 1 },
+    {
+      field: 'subcategory',
+      headerName: 'Категория',
+      renderCell: ({ row: { name } }) => (
+        name
+      ),
+      flex: 1
+    },
     // {
     //   field: 'file',
     //   headerName: 'Файл',

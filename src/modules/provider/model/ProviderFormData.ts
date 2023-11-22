@@ -7,7 +7,7 @@ export interface ProviderFormData {
   image?: string | null
   lang_id?: number
   name?: string
-  subcategory_id: number
+  subcategory: number
 }
 
 const yupObject = {
@@ -15,7 +15,7 @@ const yupObject = {
   description: yup.string().nullable(),
   lang_id: yup.number().required('Введите язык'),
   image: yup.string().nullable(),
-  subcategory_id: yup.number().required()
+  subcategory: yup.number().required()
 }
 
 type FormType = yup.ObjectSchema<ProviderFormData, yup.AnyObject>

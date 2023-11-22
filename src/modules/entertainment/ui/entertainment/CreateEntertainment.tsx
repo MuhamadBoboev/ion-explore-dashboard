@@ -7,22 +7,28 @@ import toast from 'react-hot-toast'
 import { AxiosError } from 'axios'
 import CustomDialog from '@shared/ui/CustomDialog/CustomDialog'
 import { LoadingButton } from '@mui/lab'
-import { useProviderStore } from '@modules/provider/model/store'
-import { createProviderScheme, ProviderFormData } from '@modules/provider/model/ProviderFormData'
-import { ProviderForm } from '@modules/provider/ui/ProviderForm'
+// import { useEntertainmentStore } from '@modules/Entertainment/model/store'
+// import { createEntertainmentScheme, EntertainmentFormData } from '@modules/Entertainment/model/EntertainmentFormData'
+// import { EntertainmentForm } from '@modules/Entertainment/ui/tour/EntertainmentForm'
 import { ICategory, ISubcategory } from '@modules/catalog'
 import { useLanguageStore } from '@shared/model/store'
+import { KeyedMutator } from 'swr'
+import { EntertainmentFormData, createEntertainmentScheme } from '@modules/entertainment/model/EntertainmentFormData'
+import { EntertainmentForm } from './EntertainmentForm'
+import { useEntertainmentStore } from '@modules/entertainment/model/store'
 
 interface Props {
+  mutate: KeyedMutator<any>
   categories: ISubcategory[]
 }
 
-function CreateProvider({ categories }: Props) {
+function CreateEntertainment({ categories, mutate }: Props) {
   const [images, setImages] = useState<File[]>([])
   // const [files, setFiles] = useState<File[]>([])
-  const { trigger, isMutating } = useSWRMutation('/tour/', postFetcher)
+  const { trigger, isMutating } = useSWRMutation('/entertainment/', postFetcher)
   const lang = useLanguageStore(({ langList, lang }) => langList.find((el) => el.code === lang))
-  const [handleCreateClose] = useProviderStore(({ handleCreateClose }) => [handleCreateClose])
+
+  const [handleCreateClose] = useEntertainmentStore(({ handleCreateClose }) => [handleCreateClose])
   const {
     control,
     formState: { errors },
@@ -31,23 +37,24 @@ function CreateProvider({ categories }: Props) {
     setValue,
     getValues,
     watch,
-  } = useForm<ProviderFormData>({
+  } = useForm<EntertainmentFormData>({
     mode: 'onBlur',
     defaultValues: {
-      // lang_id: lang?.code
+      lang_id: lang?.id
     },
-    resolver: yupResolver(createProviderScheme)
+    resolver: yupResolver(createEntertainmentScheme)
   })
 
-  const onSubmit: SubmitHandler<ProviderFormData> = async (data) => {
+  const onSubmit: SubmitHandler<EntertainmentFormData> = async (data) => {
     if (images.length === 0) {
       setError('image', {
         message: 'Выберите логотип поставщика'
       })
     }
     try {
-      const response = await trigger({ ...data, logo: images[0] })
+      const response = await trigger({ ...data, image: images[0] })
       handleCreateClose()
+      await mutate()
       toast.success(response.message)
     } catch (e) {
       const error = e as AxiosError<{ message: string }>
@@ -61,7 +68,7 @@ function CreateProvider({ categories }: Props) {
       handleClose={handleCreateClose}
     >
       <form noValidate autoComplete="off" onSubmit={handleSubmit(onSubmit)}>
-        <ProviderForm
+        <EntertainmentForm
           errors={errors}
           control={control}
           images={images}
@@ -88,4 +95,4 @@ function CreateProvider({ categories }: Props) {
   )
 }
 
-export { CreateProvider }
+export { CreateEntertainment }

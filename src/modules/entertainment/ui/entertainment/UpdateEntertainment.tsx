@@ -8,33 +8,37 @@ import toast from 'react-hot-toast'
 import { AxiosError } from 'axios'
 import CustomDialog from '@shared/ui/CustomDialog/CustomDialog'
 import { LoadingButton } from '@mui/lab'
-import { useProviderStore } from '@modules/provider/model/store'
-import { ProviderFormData, updateProviderScheme } from '@modules/provider/model/ProviderFormData'
-import { ProviderForm } from '@modules/provider/ui/ProviderForm'
+// import { useEntertainmentStore } from '@modules/Entertainment/model/store'
+// import { EntertainmentFormData, updateEntertainmentScheme } from '@modules/Entertainment/model/EntertainmentFormData'
+// import { EntertainmentForm } from '@modules/Entertainment/ui/tour/EntertainmentForm'
 import { ICategory, ISubcategory } from '@modules/catalog'
 import Box from '@mui/material/Box'
 import Link from 'next/link'
 import { deleteFetcher } from '@shared/api/fetcher/deleteFetcher'
 import { useLanguageStore } from '@shared/model/store'
+import { EntertainmentFormData, updateEntertainmentScheme } from '@modules/entertainment/model/EntertainmentFormData'
+import { EntertainmentForm } from './EntertainmentForm'
+import { useEntertainmentStore } from '@modules/entertainment/model/store'
 
 interface Props {
   mutate: KeyedMutator<any>
   categories: ISubcategory[]
 }
 
-function UpdateProvider({ categories, mutate }: Props) {
+function UpdateEntertainment({ categories, mutate }: Props) {
   const [images, setImages] = useState<File[]>([])
   const [files, setFiles] = useState<File[]>([])
   const { langList, lang } = useLanguageStore(({ langList, lang }) => ({ langList, lang }))
   // langList.find((el) => el.code === lang)
-  const [provider, handleUpdateClose, handleUpdateOpen] = useProviderStore(
+  const [Entertainment, handleUpdateClose, handleUpdateOpen] = useEntertainmentStore(
     ({ handleUpdateClose, update, handleUpdateOpen }) => [update, handleUpdateClose, handleUpdateOpen]
   )
-  const { trigger, isMutating } = useSWRMutation(['/tour', provider?.id], updateFetcher)
+  const { trigger, isMutating } = useSWRMutation(['/entertainment', Entertainment?.id], updateFetcher)
   const {
     trigger: triggerDeleteFile,
     isMutating: isDeleteFileMutating,
   } = useSWRMutation('/tour', deleteFetcher)
+  console.log(Entertainment)
   const {
     control,
     formState: { errors },
@@ -42,19 +46,19 @@ function UpdateProvider({ categories, mutate }: Props) {
     setValue,
     getValues,
     watch,
-  } = useForm<ProviderFormData>({
+  } = useForm<EntertainmentFormData>({
     defaultValues: {
-      name: provider?.name,
-      description: provider?.description,
-      subcategory_id: categories.find(({ name }) => name === provider?.subcategory_id)?.id,
-      lang_id: langList.find((el) => el.name === provider?.lang_id)?.id
+      title: Entertainment?.title,
+      description: Entertainment?.description,
+      subcategory_id: Entertainment?.subcategory.id,
+      lang_id: langList.find((el) => el.code == Entertainment?.lang_id)?.id
     },
     mode: 'onBlur',
-    resolver: yupResolver(updateProviderScheme)
+    resolver: yupResolver(updateEntertainmentScheme)
   })
-  const onSubmit: SubmitHandler<ProviderFormData> = async (data) => {
+  const onSubmit: SubmitHandler<EntertainmentFormData> = async (data) => {
     try {
-      const response = await trigger({ ...data, logo: images[0] })
+      const response = await trigger({ ...data, image: images[0] })
       await mutate()
       handleUpdateClose()
       toast.success(response.message)
@@ -64,14 +68,13 @@ function UpdateProvider({ categories, mutate }: Props) {
     }
   }
 
-  console.log(control._names)
   return (
     <CustomDialog
       title="Изменить"
       handleClose={handleUpdateClose}
     >
       <form noValidate autoComplete="off" onSubmit={handleSubmit(onSubmit)}>
-        <ProviderForm
+        <EntertainmentForm
           errors={errors}
           control={control}
           images={images}
@@ -83,7 +86,7 @@ function UpdateProvider({ categories, mutate }: Props) {
           getValues={getValues}
           watch={watch}
         />
-        {/* {provider?.file && (
+        {/* {Entertainment?.file && (
           <>
             <Box display="flex">
               <span
@@ -93,7 +96,7 @@ function UpdateProvider({ categories, mutate }: Props) {
                 }}
               >Прикрепленный файл:</span>
               <Link
-                href={provider.file || '/'}
+                href={Entertainment.file || '/'}
                 target="_blank"
                 style={{
                   width: '100%',
@@ -102,7 +105,7 @@ function UpdateProvider({ categories, mutate }: Props) {
                   textOverflow: 'ellipsis',
                 }}
               >
-                {provider.file}
+                {Entertainment.file}
               </Link>
             </Box>
             <LoadingButton
@@ -111,10 +114,10 @@ function UpdateProvider({ categories, mutate }: Props) {
               onClick={async () => {
                 try {
                   // @ts-ignore
-                  const response: { message: string } = await triggerDeleteFile(`${provider.id}/file`)
+                  const response: { message: string } = await triggerDeleteFile(`${Entertainment.id}/file`)
                   toast.success(response.message)
                   handleUpdateOpen({
-                    ...provider,
+                    ...Entertainment,
                     file: null,
                   })
                 } catch (e) {
@@ -143,4 +146,4 @@ function UpdateProvider({ categories, mutate }: Props) {
   )
 }
 
-export { UpdateProvider }
+export { UpdateEntertainment }

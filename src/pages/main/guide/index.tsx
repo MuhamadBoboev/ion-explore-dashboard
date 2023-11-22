@@ -1,7 +1,7 @@
 import { Specialists } from '@modules/specialist'
 
 function Page() {
-  return <Specialists/>
+  return <Specialists />
 }
 
 export default Page
