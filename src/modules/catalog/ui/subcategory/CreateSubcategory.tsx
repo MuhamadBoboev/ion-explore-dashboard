@@ -11,17 +11,20 @@ import { useSubcategoryStore } from '@modules/catalog/model/subcategory/store'
 import { createSubcategoryScheme, SubcategoryFormData } from '@modules/catalog/model/subcategory/SubcategoryFormData'
 import { SubcategoryForm } from '@modules/catalog/ui/subcategory/SubcategoryForm'
 import { KeyedMutator } from 'swr'
-import { IService } from '@modules/service'
+// import { IService } from '@modules/service'
 import { postFetcherJson } from '@shared/api/fetcher/postFetcherJson'
+import { useRouter } from 'next/router'
 
 interface Props {
   categoryId: number
   mutate: KeyedMutator<any>
-  services: IService[]
+  services: any
 }
 
 function CreateSubcategory({ categoryId, mutate, services }: Props) {
   const [icons, setIcons] = useState<File[]>([])
+  const router = useRouter()
+
   const { trigger, isMutating } = useSWRMutation('/sub-category/', postFetcher)
   const [handleCreateClose] = useSubcategoryStore(({ handleCreateClose }) => [handleCreateClose])
   const {
@@ -33,7 +36,7 @@ function CreateSubcategory({ categoryId, mutate, services }: Props) {
   } = useForm<SubcategoryFormData>({
     mode: 'onBlur',
     defaultValues: {
-      // category_id: categoryId
+      category_id: Number(router.query.slug)
     },
     resolver: yupResolver(createSubcategoryScheme)
   })
@@ -68,7 +71,6 @@ function CreateSubcategory({ categoryId, mutate, services }: Props) {
         <SubcategoryForm
           errors={errors}
           control={control}
-          services={services}
           setIcons={setIcons}
           setValue={setValue}
           icons={icons}

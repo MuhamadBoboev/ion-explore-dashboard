@@ -1,7 +1,7 @@
 import useSWR from 'swr'
 import Error500 from '../../../pages/500'
 import CustomCard from '@shared/ui/CustomCard'
-import { BannerModals } from '@modules/banner/ui/BannerModals'
+// import { BannerModals } from '@modules/banner/ui/BannerModals'
 import { getFetcher } from '@shared/api/fetcher/getFetcher'
 import { IUserData } from '@modules/user/model/IUser'
 import { UsersTable } from '@modules/user/ui/UsersTable'
@@ -48,7 +48,7 @@ function Users() {
 
   return (
     <CustomCard>
-      <BannerModals mutate={mutate} />
+      {/* <BannerModals mutate={mutate} /> */}
       <Box
         mb={5}
         display="flex"

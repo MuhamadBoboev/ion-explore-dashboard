@@ -24,11 +24,11 @@ function SpecialistImages() {
     isLoading,
     isValidating,
   } = useSWR<{ data: ISpecialist }>(`/specialists/${router.query.slug}`, getFetcher)
-  const {trigger, isMutating} = useSWRMutation('/specialist-images', deleteFetcher)
-  const [handleCreateOpen] = useSpecialistImageStore(({handleCreateOpen}) => [handleCreateOpen])
+  const { trigger, isMutating } = useSWRMutation('/specialist-images', deleteFetcher)
+  const [handleCreateOpen] = useSpecialistImageStore(({ handleCreateOpen }) => [handleCreateOpen])
 
   if (isLoading || isValidating || isMutating) {
-    return <Loader/>
+    return <Loader />
   }
 
   if (!specialist) {
@@ -42,18 +42,18 @@ function SpecialistImages() {
         title={<>
           <IconButton
             title="Назад"
-            sx={{mr: 4}}
+            sx={{ mr: 4 }}
             href="/main/specialists"
             component={Link}
           >
-            <Icon icon="ep:back"/>
+            <Icon icon="ep:back" />
           </IconButton>
           Галерея "{specialist.data.name || ''}"
         </>}
         buttonName="Добавить изображение"
       />
       <Box p={8}>
-        <ImageList sx={{width: '100%', height: 'auto'}}>
+        {/* <ImageList sx={{width: '100%', height: 'auto'}}>
           {specialist.data.images.map(image => (
             <SpecialistImage
               image={image}
@@ -61,7 +61,7 @@ function SpecialistImages() {
               mutate={mutate}
             />
           ))}
-        </ImageList>
+        </ImageList> */}
       </Box>
       <SpecialistImageModals
         mutate={mutate}

@@ -38,7 +38,7 @@ function Entertainments() {
       />
       <CustomPageHeader
         handleOpen={handleCreateOpen}
-        title="Поставщики"
+        title="Развлечения"
         buttonName="Создать"
       />
       <EntertainmentsTable

@@ -6,14 +6,14 @@ import { getMaxNumberErrorMessage } from '@shared/lib/getMaxNumberErrorMessage'
 
 export interface SubcategoryFormData {
   name: string
-  // category_id: number
+  category_id: number
   // image?: any
   icon: any
 }
 
 const yupObject = {
   name: yup.string().max(255, getMaxLengthErrorMessage()).required('Введите название подкатегории'),
-  // category_id: yup.number().required('Введите название подкатегории'),
+  category_id: yup.number().required('Введите название подкатегории'),
   // image: yup.string().nullable(),
   icon: yup.string().required('Добавьте иконку')
 }

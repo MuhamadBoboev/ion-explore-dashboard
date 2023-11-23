@@ -10,12 +10,12 @@ import { LoadingButton } from '@mui/lab'
 import { useCategoryStore } from '@modules/catalog/model/category/store'
 import { CategoryFormData, updateCategoryScheme } from '@modules/catalog/model/category/CategoryFormData'
 import { CategoryForm } from '@modules/catalog/ui/category/CategoryForm'
-import { IService } from '@modules/service'
+// import { IService } from '@modules/service'
 import { updateFetcherJson } from '@shared/api/fetcher/updateFetcherJson'
 
 interface Props {
   mutate: KeyedMutator<any>
-  services: IService[]
+  services: any
 }
 
 function UpdateCategory({ mutate, services }: Props) {

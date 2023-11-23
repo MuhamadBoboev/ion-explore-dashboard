@@ -1,5 +1,5 @@
 import { ISubcategory } from '@modules/catalog'
-import { IService } from '@modules/service'
+// import { IService } from '@modules/service'
 
 export interface ICategory {
   id: number

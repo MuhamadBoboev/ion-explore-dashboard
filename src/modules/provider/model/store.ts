@@ -1,9 +1,9 @@
 import { create } from 'zustand'
-import { IProvider } from '@modules/provider'
+import { ITour } from './ITour'
 
 type State = {
   open: boolean
-  update: IProvider | null
+  update: ITour | null
 }
 
 type Action = {
@@ -13,19 +13,19 @@ type Action = {
   handleUpdateClose(): void
 }
 
-export const useProviderStore = create<State & Action>((set) => ({
+export const useProviderStore = create<State & Action>(set => ({
   open: false,
   update: null,
   handleCreateOpen() {
-    set(() => ({open: true}))
+    set(() => ({ open: true }))
   },
   handleCreateClose() {
-    set(() => ({open: false}))
+    set(() => ({ open: false }))
   },
   handleUpdateOpen(data) {
-    set(() => ({update: data}))
+    set(() => ({ update: data }))
   },
   handleUpdateClose() {
-    set(() => ({update: null}))
-  },
+    set(() => ({ update: null }))
+  }
 }))

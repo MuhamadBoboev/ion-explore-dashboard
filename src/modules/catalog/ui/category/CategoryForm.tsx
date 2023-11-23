@@ -1,7 +1,7 @@
 import { Control, Controller, FieldErrors } from 'react-hook-form'
 import TextFieldCustom from '@shared/ui/TextFieldCustom'
 import { CategoryFormData } from '@modules/catalog/model/category/CategoryFormData'
-import { IService } from '@modules/service'
+// import { IService } from '@modules/service'
 import InputLabel from '@mui/material/InputLabel'
 import { FormControl, Select, SelectChangeEvent } from '@mui/material'
 import MenuItem from '@mui/material/MenuItem'
@@ -14,7 +14,7 @@ import { LangForm } from '@shared/ui/LangForm'
 // import { SelectLanguage } from '@shared/ui/SelectLanguage'
 
 interface Props {
-  services: IService[]
+  services: any
   errors: FieldErrors<CategoryFormData>
   control: Control<CategoryFormData>
   // images: File[]

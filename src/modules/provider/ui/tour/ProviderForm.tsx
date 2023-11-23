@@ -86,15 +86,15 @@ function ProviderForm({
           )}
         />
       </ModalFormControl> */}
-      <ModalFormControl errorMessage={errors.subcategory?.message}>
-        <InputLabel id="subcategory">Подкатегории</InputLabel>
+      <ModalFormControl errorMessage={errors.subcategory_id?.message}>
+        <InputLabel id="subcategory_id">Подкатегории</InputLabel>
         <Controller
-          name="subcategory"
+          name="subcategory_id"
           control={control}
           render={({ field }) => (
             <Select
-              labelId="select-subcategorys-label"
-              id="subcategory"
+              labelId="select-subcategory_ids-label"
+              id="subcategory_id"
               label="Подкатегории"
               {...field}
               required={true}

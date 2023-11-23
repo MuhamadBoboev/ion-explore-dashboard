@@ -18,14 +18,14 @@ interface Props {
   handleClose(): void
 }
 
-function ProfileChangeModal({handleClose}: Props) {
-  const {user, initAuth} = useAuth()
+function ProfileChangeModal({ handleClose }: Props) {
+  const { user } = useAuth()
   const [otpFetchStatus, setOtpFetchStatus] = useState<FetchStatus>('normal')
   const [submitStatus, setSubmitStatus] = useState<FetchStatus>('normal')
 
   const {
     control,
-    formState: {errors},
+    formState: { errors },
     handleSubmit,
     watch,
     getValues,
@@ -68,7 +68,7 @@ function ProfileChangeModal({handleClose}: Props) {
     }
     setSubmitStatus('fulfilled')
     toast.success(response.message)
-    await initAuth()
+    // await initAuth()
   }
 
   return (
@@ -115,7 +115,7 @@ function ProfileChangeModal({handleClose}: Props) {
           fullWidth
           size="large"
           variant="contained"
-          sx={{height: 56, mt: 3}}
+          sx={{ height: 56, mt: 3 }}
           type="submit"
         >
           {submitContent[submitStatus]}

@@ -42,20 +42,20 @@ export function categoryColumns({ handleUpdateOpen, trigger, mutate }: Props): G
             handleUpdateOpen(row)
           }}
         />,
-        <GridActionsCellItem
-          label="Удалить"
-          title="Удалить"
-          icon={<DeleteIcon sx={{ fontSize: 24 }} />}
-          onClick={async () => {
-            try {
-              const response = await trigger(row.id)
-              await mutate()
-              toast.success('Успешно удалено!')
-            } catch (e) {
-              toast.error('Произошла ошибка')
-            }
-          }}
-        />
+        // <GridActionsCellItem
+        //   label="Удалить"
+        //   title="Удалить"
+        //   icon={<DeleteIcon sx={{ fontSize: 24 }} />}
+        //   onClick={async () => {
+        //     try {
+        //       const response = await trigger(row.id)
+        //       await mutate()
+        //       toast.success('Успешно удалено!')
+        //     } catch (e) {
+        //       toast.error('Произошла ошибка')
+        //     }
+        //   }}
+        // />
       ]
     }
   ]

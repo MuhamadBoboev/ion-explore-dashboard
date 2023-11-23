@@ -1,7 +1,6 @@
 import { Control, Controller, FieldErrors, UseFormSetValue } from 'react-hook-form'
 import TextFieldCustom from '@shared/ui/TextFieldCustom'
 import { SubcategoryFormData } from '@modules/catalog/model/subcategory/SubcategoryFormData'
-import { IService } from '@modules/service'
 import InputLabel from '@mui/material/InputLabel'
 import { Select } from '@mui/material'
 import MenuItem from '@mui/material/MenuItem'
@@ -10,7 +9,6 @@ import { FileUploader } from '@shared/ui/FileUploader'
 import { Dispatch, SetStateAction } from 'react'
 
 interface Props {
-  services: IService[]
   errors: FieldErrors<SubcategoryFormData>
   control: Control<SubcategoryFormData>
   icons: File[]
@@ -18,7 +16,7 @@ interface Props {
   setValue: UseFormSetValue<SubcategoryFormData>
 }
 
-function SubcategoryForm({ control, errors, services, setIcons, setValue, icons }: Props) {
+function SubcategoryForm({ control, errors, setIcons, setValue, icons }: Props) {
 
   return (
     <>

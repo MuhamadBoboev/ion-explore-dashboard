@@ -31,7 +31,7 @@ export function subcategoryColumns({ handleUpdateOpen, trigger, mutate }: Props)
       )
     },
     { field: 'name', headerName: 'Название', flex: 1 },
-    // {field: 'description', headerName: 'Описание', flex: 1},
+    { field: 'category_id', headerName: 'Категория', flex: 1 },
     // {field: 'order', headerName: 'Порядок', width: 100},
     {
       field: 'actions',

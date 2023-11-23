@@ -3,11 +3,11 @@ import { VerticalNavItemsType } from 'src/@core/layouts/types'
 
 const navigation = (): VerticalNavItemsType => {
   return [
-    {
-      title: 'Контакты',
-      path: '/main/banners',
-      icon: 'ion:images-outline'
-    },
+    // {
+    //   title: 'Контакты',
+    //   path: '/main/banners',
+    //   icon: 'ion:images-outline'
+    // },
     {
       title: 'Категории',
       path: '/main/categories',

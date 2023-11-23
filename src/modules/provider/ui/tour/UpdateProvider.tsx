@@ -47,7 +47,7 @@ function UpdateProvider({ categories, mutate }: Props) {
     defaultValues: {
       name: provider?.name,
       description: provider?.description,
-      subcategory: provider?.subcategory.id,
+      subcategory_id: provider?.subcategory.id,
       lang_id: langList.find((el) => el.code == provider?.lang_id)?.id
     },
     mode: 'onBlur',

@@ -29,7 +29,7 @@ function Specialists() {
       <SpecialistModals mutate={mutate} />
       <CustomPageHeader
         handleOpen={handleCreateOpen}
-        title="Специалисты"
+        title="Гиды"
         buttonName="Добавить"
       />
       <SpecialistsTable

@@ -23,7 +23,6 @@ function Providers() {
     mutate,
   } = useSWR<ITour[]>(`/tour/?lang=${lang?.code}`, getFetcher)
 
-
   if (error) {
     return <Error500 />
   }
@@ -34,7 +33,7 @@ function Providers() {
       />
       <CustomPageHeader
         handleOpen={handleCreateOpen}
-        title="Поставщики"
+        title="Туры"
         buttonName="Создать"
       // leftContent={<h1>Header left</h1>}
       />

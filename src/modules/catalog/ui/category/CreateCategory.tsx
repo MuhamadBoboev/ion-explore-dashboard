@@ -9,13 +9,13 @@ import { LoadingButton } from '@mui/lab'
 import { useCategoryStore } from '@modules/catalog/model/category/store'
 import { CategoryFormData, createCategoryScheme } from '@modules/catalog/model/category/CategoryFormData'
 import { CategoryForm } from '@modules/catalog/ui/category/CategoryForm'
-import { IService } from '@modules/service'
+// import { IService } from '@modules/service'
 import { KeyedMutator } from 'swr'
 import { postFetcherJson } from '@shared/api/fetcher/postFetcherJson'
 import { useLanguageStore } from '@shared/model/store'
 
 interface Props {
-  services: IService[]
+  services: any
   mutate: KeyedMutator<any>
 }
 

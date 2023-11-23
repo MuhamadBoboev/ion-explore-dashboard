@@ -32,6 +32,7 @@ function Categories() {
         handleOpen={handleCreateOpen}
         title="Категории"
         buttonName="Создать"
+        withButton={false}
       />
       <CategoriesTable
         loading={isLoading || isValidating}
