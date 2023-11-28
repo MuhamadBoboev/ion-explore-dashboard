@@ -2,14 +2,14 @@ import { ICategory, ISubcategory } from '@modules/catalog'
 
 export interface ITour {
   description: string
-  gallery?: IGalleryItem[]
+  gallery: IGalleryItem[]
   id: number
   image?: string
   lang_id: string
   latitude?: number | null
   longitude?: number | null
   name?: string
-  steps?: IStepsItem[]
+  steps: IStepsItem[]
   subcategory: {
     icon: string
     id: number
@@ -19,12 +19,14 @@ export interface ITour {
 
 export interface IGalleryItem {
   id: number
-  img: string
+  img: any
 }
 
 export interface IStepsItem {
   description: string
   id: number
   name: string
+  order: number
   step: string
+  tour_id: number
 }

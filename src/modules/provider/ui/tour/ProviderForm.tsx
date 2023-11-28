@@ -6,7 +6,7 @@ import { ProviderFormData } from '@modules/provider/model/ProviderFormData'
 import { ICategory, ISubcategory } from '@modules/catalog'
 import ModalFormControl from '@shared/ui/ModalFormControl'
 import InputLabel from '@mui/material/InputLabel'
-import { Select } from '@mui/material'
+import { Grid, Select } from '@mui/material'
 import MenuItem from '@mui/material/MenuItem'
 import { LangForm } from '@shared/ui/LangForm'
 
@@ -86,6 +86,29 @@ function ProviderForm({
           )}
         />
       </ModalFormControl> */}
+      <Grid container spacing={2}
+        justifyContent="space-between"
+        flexDirection='row'
+      >
+        <Grid item width='50%'>
+          <TextFieldCustom
+            name="latitude"
+            control={control}
+            label="X"
+            typeNumber
+            errorMessage={errors.latitude?.message}
+          />
+        </Grid>
+        <Grid item width='50%'>
+          <TextFieldCustom
+            name="longitude"
+            control={control}
+            label="Y"
+            typeNumber
+            errorMessage={errors.longitude?.message}
+          />
+        </Grid>
+      </Grid>
       <ModalFormControl errorMessage={errors.subcategory_id?.message}>
         <InputLabel id="subcategory_id">Подкатегории</InputLabel>
         <Controller

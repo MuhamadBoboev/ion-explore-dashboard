@@ -6,6 +6,9 @@ import toast from 'react-hot-toast'
 import { AxiosError } from 'axios'
 import { ITour } from '@modules/provider'
 import { KeyedMutator } from 'swr'
+import Collections from '@mui/icons-material/Collections'
+import { Button } from '@mui/material'
+import Link from 'next/link'
 
 interface Props {
   mutate: KeyedMutator<any>
@@ -46,8 +49,18 @@ export function providerColumns({ mutate, handleUpdateOpen, trigger }: Props): G
     {
       field: 'actions',
       type: 'actions',
-      width: 80,
+      width: 300,
       getActions: ({ row }) => [
+        <Link href={`/main/tour/${row.id}/gallery`} >
+          <Button variant='outlined'>
+            Галерея
+          </Button>
+        </Link>,
+        <Link href={`/main/tour/${row.id}/steps`} >
+          <Button variant='outlined'>
+            Шаги
+          </Button>
+        </Link>,
         <GridActionsCellItem
           title="Изменить"
           label="Изменить"
@@ -56,6 +69,14 @@ export function providerColumns({ mutate, handleUpdateOpen, trigger }: Props): G
             handleUpdateOpen(row)
           }}
         />,
+        // <GridActionsCellItem
+        //   title="Галерея"
+        //   label="Галерея"
+        //   icon={<Collections sx={{ fontSize: 24 }} />}
+        //   onClick={() => {
+        //     handleUpdateOpen(row)
+        //   }}
+        // />,
         <GridActionsCellItem
           label="Удалить"
           title="Удалить"
