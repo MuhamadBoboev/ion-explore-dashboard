@@ -18,11 +18,11 @@ const navigation = (): VerticalNavItemsType => {
       path: '/main/tour',
       icon: 'ic:baseline-shop-2'
     },
-    {
-      title: 'Галерея',
-      path: '/main/gallery',
-      icon: 'ic:baseline-shop-2'
-    },
+    // {
+    //   title: 'Галерея',
+    //   path: '/main/gallery',
+    //   icon: 'ic:baseline-shop-2'
+    // },
     {
       title: 'Развлечения',
       path: '/main/entertainment',
