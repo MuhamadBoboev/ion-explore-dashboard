@@ -65,7 +65,7 @@ function Gallery() {
         <ImageList sx={{ width: '100%', height: 'auto' }}>
           {tour.gallery.map(image => (
             <GalleryImage
-              image={image as IGallery}
+              imageItem={image as IGallery}
               trigger={trigger}
               mutate={mutate}
             />

@@ -31,8 +31,9 @@ function UpdateGalleryImage({ mutate }: Props) {
   } = useForm<GalleryFormData>({
     mode: 'onBlur',
     defaultValues: {
-      // alt: gallery?.alt,
-      // category_id: Number(router.query.id),
+      author: gallery?.author,
+      location: gallery?.location,
+      image: gallery?.img
     },
     resolver: yupResolver(updateGalleryScheme)
   })

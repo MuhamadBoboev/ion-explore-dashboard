@@ -35,8 +35,8 @@ export function providerColumns({ mutate, handleUpdateOpen, trigger }: Props): G
     {
       field: 'subcategory',
       headerName: 'Категория',
-      renderCell: ({ row: { name } }) => (
-        name
+      renderCell: ({ row: { subcategory } }) => (
+        subcategory.name
       ),
       flex: 1
     },

@@ -7,16 +7,16 @@ import { IGallery } from '@modules/gallery'
 import { useGalleryStore } from '@modules/gallery/model/store'
 
 interface Props {
-  image: IGallery
+  imageItem: IGallery
   trigger: any
   mutate: KeyedMutator<any>
 }
 
-function GalleryImage({ image, trigger, mutate }: Props) {
+function GalleryImage({ imageItem, trigger, mutate }: Props) {
   const [handleUpdateOpen] = useGalleryStore(
     ({ handleUpdateOpen }) => [handleUpdateOpen]
   )
-  const { id, img } = image
+  const { id, img } = imageItem
   return (
     <ImageListItem
       key={id}
@@ -25,7 +25,7 @@ function GalleryImage({ image, trigger, mutate }: Props) {
       }}
     >
       <img
-        src={img ?? (image as any).image}
+        src={img ?? (imageItem as any).imageItem}
         alt=""
         loading="lazy"
         style={{
@@ -41,7 +41,7 @@ function GalleryImage({ image, trigger, mutate }: Props) {
             <LoadingButton
               sx={{ color: 'rgba(255, 255, 255, 0.54)', marginRight: 2, minWidth: 0, padding: '8px' }}
               onClick={() => {
-                handleUpdateOpen(image)
+                handleUpdateOpen(imageItem)
               }}
             >
               <Icon icon="material-symbols:edit" fontSize={20} />

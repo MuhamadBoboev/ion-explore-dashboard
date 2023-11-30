@@ -32,7 +32,7 @@ interface Props {
 }
 
 // ** Styled Components
-const BadgeContentSpan = styled('span')(({theme}) => ({
+const BadgeContentSpan = styled('span')(({ theme }) => ({
   width: 8,
   height: 8,
   borderRadius: '50%',
@@ -40,7 +40,7 @@ const BadgeContentSpan = styled('span')(({theme}) => ({
   boxShadow: `0 0 0 2px ${theme.palette.background.paper}`
 }))
 
-const MenuItemStyled = styled(MenuItem)<MenuItemProps>(({theme}) => ({
+const MenuItemStyled = styled(MenuItem)<MenuItemProps>(({ theme }) => ({
   '&:hover .MuiBox-root, &:hover .MuiBox-root svg': {
     color: theme.palette.primary.main
   }
@@ -48,7 +48,7 @@ const MenuItemStyled = styled(MenuItem)<MenuItemProps>(({theme}) => ({
 
 const UserDropdown = (props: Props) => {
   // ** Props
-  const {settings} = props
+  const { settings } = props
 
   // ** States
   const [anchorEl, setAnchorEl] = useState<Element | null>(null)
@@ -57,10 +57,10 @@ const UserDropdown = (props: Props) => {
 
   // ** Hooks
   const router = useRouter()
-  const {logout, user} = useAuth()
+  const { logout, user } = useAuth()
 
   // ** Vars
-  const {direction} = settings
+  const { direction } = settings
 
   const handleDropdownOpen = (event: SyntheticEvent) => {
     setAnchorEl(event.currentTarget)
@@ -127,8 +127,8 @@ const UserDropdown = (props: Props) => {
       <Badge
         overlap="circular"
         onClick={handleDropdownOpen}
-        sx={{ml: 2, cursor: 'pointer'}}
-        badgeContent={<BadgeContentSpan/>}
+        sx={{ ml: 2, cursor: 'pointer' }}
+        badgeContent={<BadgeContentSpan />}
         anchorOrigin={{
           vertical: 'bottom',
           horizontal: 'right'
@@ -137,7 +137,7 @@ const UserDropdown = (props: Props) => {
         <Avatar
           alt={user?.name || 'Admin'}
           onClick={handleDropdownOpen}
-          sx={{width: 40, height: 40}}
+          sx={{ width: 40, height: 40 }}
           src="/images/avatars"
         />
       </Badge>
@@ -145,15 +145,15 @@ const UserDropdown = (props: Props) => {
         anchorEl={anchorEl}
         open={Boolean(anchorEl)}
         onClose={() => handleDropdownClose()}
-        sx={{'& .MuiMenu-paper': {width: 230, mt: 4.5}}}
-        anchorOrigin={{vertical: 'bottom', horizontal: direction === 'ltr' ? 'right' : 'left'}}
-        transformOrigin={{vertical: 'top', horizontal: direction === 'ltr' ? 'right' : 'left'}}
+        sx={{ '& .MuiMenu-paper': { width: 230, mt: 4.5 } }}
+        anchorOrigin={{ vertical: 'bottom', horizontal: direction === 'ltr' ? 'right' : 'left' }}
+        transformOrigin={{ vertical: 'top', horizontal: direction === 'ltr' ? 'right' : 'left' }}
       >
-        <Box sx={{py: 1.75, px: 6}}>
-          <Box sx={{display: 'flex', alignItems: 'center'}}>
+        <Box sx={{ py: 1.75, px: 6 }}>
+          <Box sx={{ display: 'flex', alignItems: 'center' }}>
             <Badge
               overlap="circular"
-              badgeContent={<BadgeContentSpan/>}
+              badgeContent={<BadgeContentSpan />}
               anchorOrigin={{
                 vertical: 'bottom',
                 horizontal: 'right'
@@ -162,19 +162,19 @@ const UserDropdown = (props: Props) => {
               <Avatar
                 alt={user?.name || 'Admin'}
                 src="/images/avatars"
-                sx={{width: '2.5rem', height: '2.5rem'}}
+                sx={{ width: '2.5rem', height: '2.5rem' }}
               />
             </Badge>
-            <Box sx={{display: 'flex', ml: 2.5, alignItems: 'flex-start', flexDirection: 'column'}}>
-              <Typography sx={{fontWeight: 500}}>{user?.name || 'Admin'}</Typography>
+            <Box sx={{ display: 'flex', ml: 2.5, alignItems: 'flex-start', flexDirection: 'column' }}>
+              <Typography sx={{ fontWeight: 500 }}>{user?.name || 'Admin'}</Typography>
               <Typography variant="body2">
                 {highRole?.name}
               </Typography>
             </Box>
           </Box>
         </Box>
-        <Divider sx={{my: theme => `${theme.spacing(2)} !important`}}/>
-        <MenuItemStyled sx={{p: 0}} onClick={handleOpenChangeProfile}>
+        <Divider sx={{ my: theme => `${theme.spacing(2)} !important` }} />
+        {/* <MenuItemStyled sx={{p: 0}} onClick={handleOpenChangeProfile}>
           <Box sx={styles}>
             <Icon icon="iconamoon:profile-fill"/>
             Изменить профиль
@@ -186,9 +186,9 @@ const UserDropdown = (props: Props) => {
             Изменить пароль
           </Box>
         </MenuItemStyled>
-        <Divider sx={{my: theme => `${theme.spacing(2)} !important`}}/>
-        <MenuItemStyled onClick={handleLogout} sx={{py: 2, '& svg': {mr: 2, fontSize: '1.375rem'}}}>
-          <Icon icon="tabler:logout"/>
+        <Divider sx={{my: theme => `${theme.spacing(2)} !important`}}/> */}
+        <MenuItemStyled onClick={handleLogout} sx={{ py: 2, '& svg': { mr: 2, fontSize: '1.375rem' } }}>
+          <Icon icon="tabler:logout" />
           Выход
         </MenuItemStyled>
       </Menu>

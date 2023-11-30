@@ -1,5 +1,3 @@
-import { ICategory, ISubcategory } from '@modules/catalog'
-
 export interface ITour {
   description: string
   gallery: IGalleryItem[]
@@ -10,13 +8,14 @@ export interface ITour {
   longitude?: number | null
   name?: string
   steps: IStepsItem[]
-  subcategory: {
-    icon: string
-    id: number
-    name: string
-  }
+  subcategory: ISubcategory
 }
 
+interface ISubcategory {
+  icon: string
+  id: number
+  name: string
+}
 export interface IGalleryItem {
   id: number
   img: any
