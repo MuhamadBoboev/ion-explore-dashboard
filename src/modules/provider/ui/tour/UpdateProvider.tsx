@@ -35,7 +35,7 @@ function UpdateProvider({ categories, mutate }: Props) {
     trigger: triggerDeleteFile,
     isMutating: isDeleteFileMutating,
   } = useSWRMutation('/tour', deleteFetcher)
-  console.log(provider)
+  // console.log(provider)
   const {
     control,
     formState: { errors },
@@ -47,6 +47,9 @@ function UpdateProvider({ categories, mutate }: Props) {
     defaultValues: {
       name: provider?.name,
       description: provider?.description,
+      latitude: provider?.latitude,
+      image: provider?.image,
+      longitude: provider?.longitude,
       subcategory_id: provider?.subcategory.id,
       lang_id: langList.find((el) => el.code == provider?.lang_id)?.id
     },
