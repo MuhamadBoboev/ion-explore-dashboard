@@ -64,6 +64,13 @@ function ProviderForm({
           rows: 4,
         })}
       />
+      <TextFieldCustom
+        name="region"
+        control={control}
+        label="Регион"
+        errorMessage={errors.region?.message}
+        required
+      />
       <LangForm errorMessage={errors.lang_id?.message} control={control} />
       {/* <ModalFormControl errorMessage={errors.category_ids?.message}>
         <InputLabel id="subcategory_id">Категории</InputLabel>

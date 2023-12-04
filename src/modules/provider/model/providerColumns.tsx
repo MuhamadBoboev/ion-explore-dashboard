@@ -32,6 +32,7 @@ export function providerColumns({ mutate, handleUpdateOpen, trigger }: Props): G
     },
     { field: 'name', headerName: 'Название', flex: 1 },
     { field: 'description', headerName: 'Описание', flex: 1 },
+    { field: 'region', headerName: 'Регион', flex: 1 },
     {
       field: 'subcategory',
       headerName: 'Категория',

@@ -9,6 +9,7 @@ export interface ITour {
   name?: string
   steps: IStepsItem[]
   subcategory: ISubcategory
+  region: string | null
 }
 
 interface ISubcategory {

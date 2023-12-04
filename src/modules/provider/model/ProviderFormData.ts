@@ -12,6 +12,7 @@ export interface ProviderFormData {
   subcategory_id: number
   latitude?: number | null
   longitude?: number | null
+  region: string | null
 }
 
 interface IGallery {
@@ -27,7 +28,8 @@ const yupObject = {
   subcategory_id: yup.number().required(),
   latitude: yup.number().transform(transformNumberOrNull).nullable(),
   longitude: yup.number().transform(transformNumberOrNull).nullable(),
-  gallery: yup.array().nullable()
+  gallery: yup.array().nullable(),
+  region: yup.string().required('Введите регион')
 }
 
 type FormType = yup.ObjectSchema<ProviderFormData, yup.AnyObject>

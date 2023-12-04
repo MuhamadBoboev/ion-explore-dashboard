@@ -51,7 +51,8 @@ function UpdateProvider({ categories, mutate }: Props) {
       image: provider?.image,
       longitude: provider?.longitude,
       subcategory_id: provider?.subcategory.id,
-      lang_id: langList.find((el) => el.code == provider?.lang_id)?.id
+      lang_id: langList.find((el) => el.code == provider?.lang_id)?.id,
+      region: provider?.region
     },
     mode: 'onBlur',
     resolver: yupResolver(updateProviderScheme)

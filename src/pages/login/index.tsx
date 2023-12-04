@@ -111,8 +111,8 @@ const schema = yup.object().shape({
 })
 
 const defaultValues = {
-  password: '123456',
-  contact: 'admin@ion.tj'
+  password: '',
+  contact: ''
 }
 
 interface FormData {
@@ -186,7 +186,7 @@ const LoginPage = () => {
               <Typography sx={{ mb: 1.5, fontWeight: 500, fontSize: '1.625rem', lineHeight: 1.385 }}>
                 Вход в админ панель
                 <br />
-                PRO MEBEL
+                Explore Tajikistan
               </Typography>
             </Box>
             <form noValidate autoComplete="off" onSubmit={handleSubmit(onSubmit)}>
