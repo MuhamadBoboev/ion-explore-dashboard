@@ -34,6 +34,12 @@ function SpecialistForm({ control, errors, images, setImages, setValue }: Props)
         required
       />
       <TextFieldCustom
+        name="description"
+        control={control}
+        label="Описание"
+        errorMessage={errors.description?.message}
+      />
+      <TextFieldCustom
         name="speciality"
         control={control}
         label="Специальность"

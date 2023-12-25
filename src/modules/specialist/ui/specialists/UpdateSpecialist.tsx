@@ -40,7 +40,8 @@ function UpdateSpecialist({ mutate }: Props) {
       image: specialist?.image,
       name: specialist?.name,
       lang_id: lang?.id,
-      speciality: specialist?.speciality
+      speciality: specialist?.speciality,
+      description: specialist?.description
     },
     mode: 'onBlur',
     resolver: yupResolver(updateSpecialistScheme)

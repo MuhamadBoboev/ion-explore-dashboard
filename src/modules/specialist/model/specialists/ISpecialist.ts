@@ -7,6 +7,7 @@ export interface ISpecialist {
   lang_id: string
   name: string
   speciality: string
+  description: string
 }
 
 export interface ISpecialistData extends IPagination {
