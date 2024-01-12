@@ -1,6 +1,7 @@
 import * as yup from 'yup'
 import { getMaxLengthErrorMessage } from '@shared/lib/getMaxLengthErrorMessage'
 import { ISubcategory } from '@modules/catalog'
+import { IContacts } from './IEntertainment'
 
 export interface EntertainmentFormData {
   description?: string | null

@@ -1,51 +1,50 @@
 import { KeyedMutator } from 'swr'
 import useSWRMutation from 'swr/mutation'
-import { updateFetcher } from '@shared/api/fetcher/updateFetcher'
 import { SubmitHandler, useForm } from 'react-hook-form'
 import { yupResolver } from '@hookform/resolvers/yup'
 import toast from 'react-hot-toast'
 import { AxiosError } from 'axios'
 import CustomDialog from '@shared/ui/CustomDialog/CustomDialog'
 import { LoadingButton } from '@mui/lab'
-import { useSubcategoryStore } from '@modules/catalog/model/subcategory/store'
-import { SubcategoryFormData, updateSubcategoryScheme } from '@modules/catalog/model/subcategory/SubcategoryFormData'
-import { SubcategoryForm } from '@modules/catalog/ui/subcategory/SubcategoryForm'
 import { updateFetcherJson } from '@shared/api/fetcher/updateFetcherJson'
-import { useState } from 'react'
+import { useEnterContactStore } from '@modules/enterContact/model/enterContacts/store'
+import { EnterContactForm } from './EnterContactForm'
+import { EnterContactFormData, updateEnterContactScheme } from '@modules/enterContact/model/enterContacts/enterContactFormData'
 import { useRouter } from 'next/router'
 
 interface Props {
-  categoryId: number
   mutate: KeyedMutator<any>
-  services: any
+  // services: any
 }
 
-function UpdateSubcategory({ categoryId, mutate, services }: Props) {
-  const [icons, setIcons] = useState<File[]>([])
-  const router = useRouter()
-  const [subcategory, handleUpdateClose] = useSubcategoryStore(
+function UpdateEnterContact({ mutate }: Props) {
+  // const [images, setImages] = useState<File[]>([])
+  const [category, handleUpdateClose] = useEnterContactStore(
     ({ handleUpdateClose, update }) => [update, handleUpdateClose]
   )
-  const { trigger, isMutating } = useSWRMutation(['/sub-category', subcategory?.id], updateFetcher)
+  const router = useRouter()
+  const { trigger, isMutating } = useSWRMutation(['/entertainment/contacts', category?.id], updateFetcherJson)
   const {
     control,
     formState: { errors },
     handleSubmit,
-    setError,
-    setValue
-  } = useForm<SubcategoryFormData>({
+  } = useForm<EnterContactFormData>({
     defaultValues: {
-      name: subcategory?.name,
-      category_id: Number(router.query.slug),
+      id: category?.id,
+      address: category?.address,
+      phone: category?.phone,
+      whatsapp: category?.whatsapp,
+      latitude: category?.latitude,
+      longitude: category?.longitude,
+      entertainment_id: Number(router.query.id)
     },
     mode: 'onBlur',
-    resolver: yupResolver(updateSubcategoryScheme)
+    resolver: yupResolver(updateEnterContactScheme)
   })
 
-
-  const onSubmit: SubmitHandler<SubcategoryFormData> = async (data) => {
+  const onSubmit: SubmitHandler<EnterContactFormData> = async (data) => {
     try {
-      const response = await trigger({ ...data, icon: icons[0] })
+      const response = await trigger(data)
       await mutate()
       handleUpdateClose()
       toast.success(response.message)
@@ -54,19 +53,16 @@ function UpdateSubcategory({ categoryId, mutate, services }: Props) {
       toast.error(error.response?.data.message || 'Произошла ошибка')
     }
   }
-
   return (
     <CustomDialog
       title="Изменить"
       handleClose={handleUpdateClose}
     >
       <form noValidate autoComplete="off" onSubmit={handleSubmit(onSubmit)}>
-        <SubcategoryForm
+        <EnterContactForm
           errors={errors}
           control={control}
-          setIcons={setIcons}
-          setValue={setValue}
-          icons={icons}
+        // services={services}
         />
         <LoadingButton
           loading={isMutating}
@@ -83,4 +79,4 @@ function UpdateSubcategory({ categoryId, mutate, services }: Props) {
   )
 }
 
-export { UpdateSubcategory }
+export { UpdateEnterContact }

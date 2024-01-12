@@ -6,6 +6,9 @@ import toast from 'react-hot-toast'
 import { AxiosError } from 'axios'
 import { KeyedMutator } from 'swr'
 import { IEntertainment } from './IEntertainment'
+import Link from 'next/link'
+import { Button } from '@mui/material'
+import { useLanguageStore } from '@shared/model/store'
 
 interface Props {
   mutate: KeyedMutator<any>
@@ -14,6 +17,8 @@ interface Props {
 }
 
 export function entertainmentColumns({ mutate, handleUpdateOpen, trigger }: Props): GridColDef<IEntertainment>[] {
+  const { lang } = useLanguageStore(({ lang }) => ({ lang }))
+
   return [
     { field: 'id', headerName: '#', width: 80 },
     {
@@ -46,8 +51,11 @@ export function entertainmentColumns({ mutate, handleUpdateOpen, trigger }: Prop
     {
       field: 'actions',
       type: 'actions',
-      width: 80,
+      width: 240,
       getActions: ({ row }) => [
+        <Link style={{ marginRight: 8 }} href={`/main/entertainment/${row.id}?lang=${lang}`}>
+          <Button variant="outlined">Контакты</Button>
+        </Link>,
         <GridActionsCellItem
           title="Изменить"
           label="Изменить"
