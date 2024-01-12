@@ -30,13 +30,13 @@ function UpdateEnterContact({ mutate }: Props) {
     handleSubmit,
   } = useForm<EnterContactFormData>({
     defaultValues: {
-      id: category?.id,
+      // id: category?.id,
       address: category?.address,
       phone: category?.phone,
       whatsapp: category?.whatsapp,
       latitude: category?.latitude,
       longitude: category?.longitude,
-      entertainment_id: Number(router.query.id)
+      // entertainment_id: Number(router.query.id)
     },
     mode: 'onBlur',
     resolver: yupResolver(updateEnterContactScheme)
