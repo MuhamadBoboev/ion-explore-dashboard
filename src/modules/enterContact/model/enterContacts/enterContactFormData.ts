@@ -11,7 +11,7 @@ export interface EnterContactFormData {
   longitude?: string | null
   phone?: string | null
   whatsapp?: string | null
-  // entertainment_id: number
+  entertainment_id: number
 }
 
 const yupObject = {
@@ -22,7 +22,7 @@ const yupObject = {
   longitude: yup.string().nullable(),
   phone: yup.string().nullable(),
   whatsapp: yup.string().nullable(),
-  // entertainment_id: yup.number().required()
+  entertainment_id: yup.number().required()
 }
 
 type FormType = yup.ObjectSchema<EnterContactFormData, yup.AnyObject>
